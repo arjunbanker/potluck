@@ -30,8 +30,8 @@ export const authOptions: NextAuthOptions = {
       }
       return session
     },
-    async signIn({ user, email }) {
-      console.log('Sign in attempt for:', user?.email || email?.verificationRequest?.identifier)
+    async signIn({ user }) {
+      console.log('Sign in attempt for:', user?.email)
       return true
     },
   },
