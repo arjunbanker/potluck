@@ -1,7 +1,22 @@
-import { NextAuthOptions } from "next-auth"
-import EmailProvider from "next-auth/providers/email"
-import { DrizzleAdapter } from "@auth/drizzle-adapter"
-import { db } from "@/lib/db"
+import { NextAuthOptions } from "next-auth";
+import EmailProvider from "next-auth/providers/email";
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import { db } from "@/lib/db";
+
+// Automatically detect the correct URL for development
+const getAuthUrl = () => {
+  if (process.env.NEXTAUTH_URL) {
+    return process.env.NEXTAUTH_URL;
+  }
+
+  // Fallback for development - try to detect port from dev server
+  if (process.env.NODE_ENV === "development") {
+    const port = process.env.PORT || "3000";
+    return `http://localhost:${port}`;
+  }
+
+  return "http://localhost:3000";
+};
 
 export const authOptions: NextAuthOptions = {
   adapter: DrizzleAdapter(db),
@@ -23,16 +38,51 @@ export const authOptions: NextAuthOptions = {
     verifyRequest: "/auth/verify-request",
     error: "/auth/error",
   },
+  session: {
+    strategy: "database",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+    updateAge: 24 * 60 * 60, // 24 hours - only update session in DB once per day
+    generateSessionToken: () => {
+      // Use crypto.randomUUID for better performance
+      return crypto.randomUUID();
+    },
+  },
+  cookies: {
+    sessionToken: {
+      name:
+        process.env.NODE_ENV === "production"
+          ? `__Secure-next-auth.session-token`
+          : `next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 30 * 24 * 60 * 60, // 30 days
+      },
+    },
+  },
   callbacks: {
     async session({ session, user }) {
       if (user && session.user) {
-        session.user.id = user.id
+        session.user.id = user.id;
       }
-      return session
+      return session;
     },
-    async signIn({ user }) {
-      console.log('Sign in attempt for:', user?.email)
-      return true
+    async signIn({ user, account }) {
+      if (user?.email) {
+        console.log("Sign in successful for:", user.email);
+        return true;
+      }
+      return false;
     },
   },
-}
+  events: {
+    async signIn({ user, account, profile }) {
+      console.log("User signed in:", user.email);
+    },
+    async signOut({ session, token }) {
+      console.log("User signed out");
+    },
+  },
+};

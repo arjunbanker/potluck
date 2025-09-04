@@ -1,38 +1,38 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { signIn, getSession } from "next-auth/react"
-import { useRouter } from "next/navigation"
+import { useState } from "react";
+import { signIn, getSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function SignIn() {
-  const [email, setEmail] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  const [message, setMessage] = useState("")
-  const router = useRouter()
+  const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setMessage("")
+    e.preventDefault();
+    setIsLoading(true);
+    setMessage("");
 
     try {
       const result = await signIn("email", {
         email,
         redirect: false,
         callbackUrl: "/",
-      })
+      });
 
       if (result?.error) {
-        setMessage("Error sending email. Please try again.")
+        setMessage("Error sending email. Please try again.");
       } else {
-        setMessage("Check your email for the magic link!")
+        setMessage("Check your email for the magic link!");
       }
     } catch (error) {
-      setMessage("Something went wrong. Please try again.")
+      setMessage("Something went wrong. Please try again.");
     }
 
-    setIsLoading(false)
-  }
+    setIsLoading(false);
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -81,5 +81,5 @@ export default function SignIn() {
         </form>
       </div>
     </div>
-  )
+  );
 }

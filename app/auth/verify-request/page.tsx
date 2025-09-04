@@ -12,5 +12,5 @@ export default function VerifyRequest() {
         </div>
       </div>
     </div>
-  )
+  );
 }
