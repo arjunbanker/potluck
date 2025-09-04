@@ -9,11 +9,11 @@ import { z } from "zod";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const session = await getServerSession(authOptions);
-    const recipeId = params.id;
+    const { id: recipeId } = await params;
 
     const [recipe] = await db
       .select()
@@ -59,7 +59,7 @@ export async function GET(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -67,7 +67,7 @@ export async function PATCH(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const recipeId = params.id;
+    const { id: recipeId } = await params;
     const body = await request.json();
 
     // Simple privacy update validation
@@ -132,7 +132,7 @@ export async function PATCH(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -140,7 +140,7 @@ export async function PUT(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const recipeId = params.id;
+    const { id: recipeId } = await params;
     const body = await request.json();
     const validatedData = UpdateRecipeSchema.parse(body);
 
@@ -211,7 +211,7 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -219,7 +219,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const recipeId = params.id;
+    const { id: recipeId } = await params;
 
     const [existingRecipe] = await db
       .select()
