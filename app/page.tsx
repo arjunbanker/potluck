@@ -23,7 +23,7 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50">
       {session ? (
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <PublicRecipeFeed userEmail={session.user?.email} />
+          <PublicRecipeFeed userEmail={session.user?.email || undefined} />
         </main>
       ) : (
         <LandingPage />

@@ -150,7 +150,7 @@ export function RecipeCard({
               <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0">
                 {contributor.profileImage || contributor.image ? (
                   <img
-                    src={contributor.profileImage || contributor.image}
+                    src={contributor.profileImage || contributor.image || ""}
                     alt={contributor.name || "Contributor"}
                     className="w-full h-full object-cover"
                   />

@@ -122,14 +122,14 @@ export async function parseRecipeFromUrl(
   }
 }
 
-async function summarizeInstructions(instructions: any[]): Promise<any[]> {
+async function summarizeInstructions(instructions: RecipeData['instructions']): Promise<RecipeData['instructions']> {
   if (!process.env.OPENAI_API_KEY) {
     return instructions;
   }
 
   try {
     const instructionText = instructions
-      .map((i) => `Step ${i.step}: ${i.text}`)
+      .map((i: RecipeData['instructions'][0]) => `Step ${i.step}: ${i.text}`)
       .join("\n");
 
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -155,8 +155,8 @@ async function summarizeInstructions(instructions: any[]): Promise<any[]> {
     const data = await response.json();
     const summarized = data.choices[0].message.content;
 
-    const lines = summarized.split("\n").filter((line) => line.trim());
-    return lines.map((line, index) => ({
+    const lines = summarized.split("\n").filter((line: string) => line.trim());
+    return lines.map((line: string, index: number) => ({
       step: index + 1,
       text: line.replace(/^(Step \d+:?\s*|\d+\.\s*)/i, "").trim(),
       duration: instructions[index]?.duration,
@@ -216,7 +216,7 @@ function validateAndCleanRecipeData(data: any): RecipeData {
             }))
           : [],
       }))
-      .filter((group) => group.items.length > 0);
+      .filter((group: RecipeData['ingredients'][0]) => group.items.length > 0);
   }
 
   if (Array.isArray(data.instructions)) {
