@@ -7,7 +7,7 @@
     "build": "npm run typecheck && npm run lint:build && next build --turbopack",
     "start": "next start",
     "lint": "biome check",
-    "lint:build": "biome check --no-errors-on-unmatched --diagnostic-level=error",
+    "lint:build": "biome lint --no-errors-on-unmatched --diagnostic-level=error",
     "lint:strict": "biome check --diagnostic-level=warn",
     "format": "biome format --write",
     "typecheck": "tsc --noEmit",
