@@ -1,13 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/components/providers/auth-context";
 import { useRouter } from "next/navigation";
-import { Navbar } from "@/components/navbar";
 import { RecipeViewer } from "@/components/recipes/recipe-viewer";
 
 export default function RecipePage({ params }: { params: { id: string } }) {
-  const { data: session } = useSession();
+  const { session } = useAuth();
   const router = useRouter();
   const [recipe, setRecipe] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -196,7 +195,6 @@ export default function RecipePage({ params }: { params: { id: string } }) {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Navbar />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center justify-center h-64">
             <div className="text-gray-500">Loading recipe...</div>
@@ -209,7 +207,6 @@ export default function RecipePage({ params }: { params: { id: string } }) {
   if (error) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Navbar />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="bg-white rounded-lg shadow-sm p-8 text-center">
             <h2 className="text-xl font-semibold text-gray-900 mb-2">
@@ -231,7 +228,6 @@ export default function RecipePage({ params }: { params: { id: string } }) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {isOwner && (

@@ -1,10 +1,11 @@
 "use client";
 
-import { useSession, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
+import { useAuth } from "@/components/providers/auth-context";
 import Link from "next/link";
 
 export function AuthStatus() {
-  const { data: session, status } = useSession();
+  const { session, status } = useAuth();
 
   if (status === "loading") {
     return <div className="text-sm text-gray-500">Loading...</div>;

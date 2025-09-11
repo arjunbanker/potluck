@@ -1,14 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/components/providers/auth-context";
 import Link from "next/link";
-import { Navbar } from "@/components/navbar";
 import { RecipeCard } from "@/components/recipes/recipe-card";
 import { ImportModal } from "@/components/recipes/import-modal";
 
 export default function Dashboard() {
-  const { data: session, status } = useSession();
+  const { session, status } = useAuth();
   const [recipes, setRecipes] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showImportModal, setShowImportModal] = useState(false);
@@ -52,7 +51,6 @@ export default function Dashboard() {
   if (status === "loading" || (status === "authenticated" && isLoading)) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Navbar />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center justify-center h-64">
             <div className="text-gray-500">Loading...</div>
@@ -64,7 +62,6 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center justify-between mb-8">

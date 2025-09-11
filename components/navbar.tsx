@@ -1,11 +1,12 @@
 "use client";
 
-import { useSession, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
+import { useAuth } from "@/components/providers/auth-context";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 
 export function Navbar() {
-  const { data: session, status } = useSession();
+  const { session, status } = useAuth();
   const [showUserMenu, setShowUserMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 

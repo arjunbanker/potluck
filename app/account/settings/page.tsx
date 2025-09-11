@@ -1,12 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/components/providers/auth-context";
 import { useRouter } from "next/navigation";
-import { Navbar } from "@/components/navbar";
 
 export default function AccountSettingsPage() {
-  const { data: session, status } = useSession();
+  const { session, status } = useAuth();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setSaving] = useState(false);
@@ -117,7 +116,6 @@ export default function AccountSettingsPage() {
   if (status === "loading" || isLoading) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Navbar />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center justify-center h-64">
             <div className="text-gray-500">Loading...</div>
@@ -129,7 +127,6 @@ export default function AccountSettingsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
 
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white rounded-lg shadow-sm">

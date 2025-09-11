@@ -1,12 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/components/providers/auth-context";
 import { useRouter } from "next/navigation";
-import { Navbar } from "@/components/navbar";
 
 export default function ImportRecipePage() {
-  const { data: session, status } = useSession();
+  const { session, status } = useAuth();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<"url" | "text">("url");
   const [url, setUrl] = useState("");
@@ -23,7 +22,6 @@ export default function ImportRecipePage() {
   if (status === "loading") {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Navbar />
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">Loading...</div>
         </div>
@@ -35,7 +33,6 @@ export default function ImportRecipePage() {
   if (status === "unauthenticated") {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Navbar />
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="bg-white rounded-lg shadow-sm p-12 text-center">
             <svg
@@ -117,7 +114,6 @@ export default function ImportRecipePage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
 
       <main className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white rounded-lg shadow-sm p-8">

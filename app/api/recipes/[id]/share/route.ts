@@ -100,7 +100,7 @@ export async function POST(
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: "Invalid share settings", details: error.errors },
+        { error: "Invalid share settings", details: error.issues },
         { status: 400 },
       );
     }
