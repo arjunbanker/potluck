@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
+import { and, eq } from "drizzle-orm";
+import { type NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
+import { z } from "zod";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { recipes, shares } from "@/lib/schema";
-import { eq, and } from "drizzle-orm";
-import { z } from "zod";
 
 const ShareSchema = z.object({
   permission: z.enum(["view", "edit"]).default("view"),
@@ -59,7 +59,7 @@ export async function POST(
     // If share already exists, return it instead of creating a new one
     if (existingShare) {
       const shareUrl = `${process.env.NEXTAUTH_URL || "http://localhost:3000"}/recipes/shared/${existingShare.token}`;
-      
+
       return NextResponse.json({
         share: existingShare,
         shareUrl,
@@ -114,7 +114,7 @@ export async function POST(
 }
 
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
@@ -138,9 +138,9 @@ export async function GET(
       )
       .limit(1);
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       share: recipeShare || null,
-      shares: recipeShare ? [recipeShare] : []  // Keep for backward compatibility
+      shares: recipeShare ? [recipeShare] : [], // Keep for backward compatibility
     });
   } catch (error) {
     console.error("Error fetching shares:", error);

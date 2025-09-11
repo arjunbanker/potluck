@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useAuth } from "@/components/providers/auth-context";
 import Link from "next/link";
-import { RecipeCard } from "@/components/recipes/recipe-card";
+import { useEffect, useState } from "react";
+import { useAuth } from "@/components/providers/auth-context";
 import { ImportModal } from "@/components/recipes/import-modal";
+import { RecipeCard } from "@/components/recipes/recipe-card";
 
 export default function Dashboard() {
   const { session, status } = useAuth();
@@ -12,17 +12,6 @@ export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [showImportModal, setShowImportModal] = useState(false);
   const [filter, setFilter] = useState<"all" | "private" | "public">("all");
-
-  useEffect(() => {
-    // Middleware handles auth redirect, so just fetch recipes when ready
-    if (status === "authenticated") {
-      setIsLoading(true);
-      fetchRecipes();
-    } else if (status === "unauthenticated") {
-      // Reset loading state if user is unauthenticated
-      setIsLoading(false);
-    }
-  }, [status, filter]);
 
   const fetchRecipes = async () => {
     try {
@@ -47,6 +36,17 @@ export default function Dashboard() {
     }
   };
 
+  useEffect(() => {
+    // Middleware handles auth redirect, so just fetch recipes when ready
+    if (status === "authenticated") {
+      setIsLoading(true);
+      fetchRecipes();
+    } else if (status === "unauthenticated") {
+      // Reset loading state if user is unauthenticated
+      setIsLoading(false);
+    }
+  }, [status]);
+
   // Show loading while session or recipes are loading
   if (status === "loading" || (status === "authenticated" && isLoading)) {
     return (
@@ -62,7 +62,6 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center justify-between mb-8">
           <div>

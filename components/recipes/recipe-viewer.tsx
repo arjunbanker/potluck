@@ -29,7 +29,7 @@ export function RecipeViewer({ title, data, source }: RecipeViewerProps) {
   const adjustQuantity = (quantity?: string): string => {
     if (!quantity || servingMultiplier === 1) return quantity || "";
 
-    const match = quantity.match(/^([\d.\/]+)(.*)/);
+    const match = quantity.match(/^([\d./]+)(.*)/);
     if (!match) return quantity;
 
     const [, num, rest] = match;
@@ -201,7 +201,7 @@ export function RecipeViewer({ title, data, source }: RecipeViewerProps) {
 
               <div className="space-y-4">
                 {data.ingredients.map((group, groupIndex) => (
-                  <div key={groupIndex}>
+                  <div key={`ingredient-group-${groupIndex}`}>
                     {group.section && (
                       <h3 className="font-medium text-gray-700 mb-2">
                         {group.section}
@@ -262,7 +262,7 @@ export function RecipeViewer({ title, data, source }: RecipeViewerProps) {
               <div className="space-y-4">
                 {data.instructions.map((instruction, index) => (
                   <div
-                    key={index}
+                    key={`instruction-${index}`}
                     className="p-4 rounded-lg border border-gray-200"
                   >
                     <div className="flex items-start gap-3">
@@ -317,7 +317,7 @@ export function RecipeViewer({ title, data, source }: RecipeViewerProps) {
                   <h3 className="font-medium text-gray-700 mb-2">Tips</h3>
                   <ul className="list-disc list-inside space-y-1">
                     {data.tips.map((tip, index) => (
-                      <li key={index} className="text-gray-600">
+                      <li key={`tip-${index}`} className="text-gray-600">
                         {tip}
                       </li>
                     ))}
@@ -327,7 +327,7 @@ export function RecipeViewer({ title, data, source }: RecipeViewerProps) {
             </div>
           )}
 
-          {source && source.url && (
+          {source?.url && (
             <div className="mt-6 pt-6 border-t">
               <p className="text-sm text-gray-500">
                 Recipe imported from:{" "}

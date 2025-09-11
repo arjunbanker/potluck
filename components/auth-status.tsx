@@ -1,8 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { useAuth } from "@/components/providers/auth-context";
-import Link from "next/link";
 
 export function AuthStatus() {
   const { session, status } = useAuth();

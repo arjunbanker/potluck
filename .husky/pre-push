@@ -1,0 +1,14 @@
+#!/bin/sh
+
+echo "🚀 Running pre-push checks..."
+
+# Run TypeScript type checking
+echo "📝 Final TypeScript check before push..."
+npm run typecheck
+if [ $? -ne 0 ]; then
+  echo "❌ TypeScript errors detected. Push aborted."
+  echo "💡 Run 'npm run typecheck' to see all errors."
+  exit 1
+fi
+
+echo "✅ All pre-push checks passed! Pushing to remote..."

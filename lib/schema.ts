@@ -1,13 +1,13 @@
+import { sql } from "drizzle-orm";
 import {
-  pgTable,
-  text,
-  timestamp,
-  primaryKey,
+  index,
   integer,
   jsonb,
-  index,
+  pgTable,
+  primaryKey,
+  text,
+  timestamp,
 } from "drizzle-orm/pg-core";
-import { sql } from "drizzle-orm";
 
 export const users = pgTable("user", {
   id: text("id").notNull().primaryKey(),

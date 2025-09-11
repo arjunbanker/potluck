@@ -5,14 +5,17 @@ let lastSessionRequest = 0;
 export function logSessionRequest(source: string) {
   const now = Date.now();
   sessionRequestCount++;
-  
-  if (process.env.NODE_ENV === 'development') {
-    console.log(`[SESSION DEBUG] Request #${sessionRequestCount} from: ${source}`, {
-      timeSinceLastRequest: now - lastSessionRequest,
-      timestamp: new Date().toISOString()
-    });
+
+  if (process.env.NODE_ENV === "development") {
+    console.log(
+      `[SESSION DEBUG] Request #${sessionRequestCount} from: ${source}`,
+      {
+        timeSinceLastRequest: now - lastSessionRequest,
+        timestamp: new Date().toISOString(),
+      },
+    );
   }
-  
+
   lastSessionRequest = now;
 }
 

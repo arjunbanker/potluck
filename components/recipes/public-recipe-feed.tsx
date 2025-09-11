@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { RecipeCard } from "./recipe-card";
 
 interface PublicRecipeFeedProps {
@@ -12,10 +12,6 @@ export function PublicRecipeFeed({ userEmail }: PublicRecipeFeedProps) {
   const [recipes, setRecipes] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    fetchPublicRecipes();
-  }, []);
 
   const fetchPublicRecipes = async () => {
     try {
@@ -33,6 +29,10 @@ export function PublicRecipeFeed({ userEmail }: PublicRecipeFeedProps) {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchPublicRecipes();
+  }, []);
 
   if (isLoading) {
     return (

@@ -9,7 +9,7 @@ export function generateSlug(title: string): string {
     .substring(0, 100);
 }
 
-export function generateUniqueSlug(title: string, userId: string): string {
+export function generateUniqueSlug(title: string, _userId: string): string {
   const baseSlug = generateSlug(title);
   const randomSuffix = Math.random().toString(36).substring(2, 8);
   return `${baseSlug}-${randomSuffix}`;
@@ -139,5 +139,5 @@ export function calculateTotalTime(data: RecipeData): number {
 export function getRecipeExcerpt(data: RecipeData, maxLength = 150): string {
   const text = data.summary || data.description || "";
   if (text.length <= maxLength) return text;
-  return text.substring(0, maxLength).trim() + "...";
+  return `${text.substring(0, maxLength).trim()}...`;
 }

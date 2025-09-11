@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, Fragment } from "react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface ImportModalProps {
   isOpen: boolean;
@@ -64,6 +64,10 @@ export function ImportModal({ isOpen, onClose }: ImportModalProps) {
         <div
           className="fixed inset-0 bg-black bg-opacity-50"
           onClick={onClose}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === "Escape" && onClose()}
+          aria-label="Close modal"
         />
 
         <div className="relative bg-white rounded-lg max-w-2xl w-full p-6">
