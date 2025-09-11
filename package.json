@@ -4,12 +4,19 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "build": "npm run typecheck && npm run lint:build && next build --turbopack",
     "start": "next start",
     "lint": "biome check",
+    "lint:build": "biome lint --no-errors-on-unmatched --diagnostic-level=error",
+    "lint:strict": "biome check --diagnostic-level=warn",
     "format": "biome format --write",
+    "typecheck": "tsc --noEmit",
+    "check:all": "npm run typecheck && npm run lint:build",
+    "check:strict": "npm run typecheck && npm run lint:strict",
+    "check:fix": "npm run format && biome check --write --unsafe",
     "db:generate": "drizzle-kit generate",
-    "db:push": "drizzle-kit push"
+    "db:push": "drizzle-kit push",
+    "prepare": "husky"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.10.0",
@@ -27,8 +34,11 @@
     "@biomejs/biome": "2.2.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/nodemailer": "^7.0.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.2",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

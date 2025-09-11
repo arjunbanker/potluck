@@ -1,14 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import { signIn, getSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+import { useState } from "react";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const router = useRouter();
+  const _router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,7 +27,7 @@ export default function SignIn() {
       } else {
         setMessage("Check your email for the magic link!");
       }
-    } catch (error) {
+    } catch (_error) {
       setMessage("Something went wrong. Please try again.");
     }
 

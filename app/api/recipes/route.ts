@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
+import { and, eq, or, sql } from "drizzle-orm";
+import { type NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
+import { z } from "zod";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { recipes, users } from "@/lib/schema";
 import { CreateRecipeSchema, generateUniqueSlug } from "@/lib/recipe-utils";
-import { eq, and, or, sql } from "drizzle-orm";
-import { z } from "zod";
+import { recipes, users } from "@/lib/schema";
 
 export async function GET(request: NextRequest) {
   try {
@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
     if (privacy === "public") {
       const limit = parseInt(searchParams.get("limit") || "50", 10);
       const offset = parseInt(searchParams.get("offset") || "0", 10);
-      
+
       const publicRecipes = await db
         .select({
           // Recipe fields
@@ -118,7 +118,10 @@ export async function GET(request: NextRequest) {
       // Default: user's recipes + all public recipes
       userRecipes = await baseQuery
         .where(
-          or(eq(recipes.userId, session.user.id), eq(recipes.privacy, "public")),
+          or(
+            eq(recipes.userId, session.user.id),
+            eq(recipes.privacy, "public"),
+          ),
         )
         .limit(limit)
         .offset(offset)

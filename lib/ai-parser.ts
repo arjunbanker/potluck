@@ -1,4 +1,4 @@
-import { RecipeData } from "./schema";
+import type { RecipeData } from "./schema";
 
 const PARSE_RECIPE_PROMPT = `You are a recipe parser. Extract structured recipe data from the provided text.
 
@@ -122,14 +122,16 @@ export async function parseRecipeFromUrl(
   }
 }
 
-async function summarizeInstructions(instructions: RecipeData['instructions']): Promise<RecipeData['instructions']> {
+async function summarizeInstructions(
+  instructions: RecipeData["instructions"],
+): Promise<RecipeData["instructions"]> {
   if (!process.env.OPENAI_API_KEY) {
     return instructions;
   }
 
   try {
     const instructionText = instructions
-      .map((i: RecipeData['instructions'][0]) => `Step ${i.step}: ${i.text}`)
+      .map((i: RecipeData["instructions"][0]) => `Step ${i.step}: ${i.text}`)
       .join("\n");
 
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -216,7 +218,7 @@ function validateAndCleanRecipeData(data: any): RecipeData {
             }))
           : [],
       }))
-      .filter((group: RecipeData['ingredients'][0]) => group.items.length > 0);
+      .filter((group: RecipeData["ingredients"][0]) => group.items.length > 0);
   }
 
   if (Array.isArray(data.instructions)) {
@@ -236,7 +238,7 @@ function validateAndCleanRecipeData(data: any): RecipeData {
 }
 
 function generateMockRecipe(text: string): RecipeData {
-  const title = text.split("\n")[0]?.substring(0, 50) || "Untitled Recipe";
+  const _title = text.split("\n")[0]?.substring(0, 50) || "Untitled Recipe";
 
   return {
     summary: "A delicious recipe parsed from your input",

@@ -1,10 +1,10 @@
-import { NextAuthOptions } from "next-auth";
-import EmailProvider from "next-auth/providers/email";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import type { NextAuthOptions } from "next-auth";
+import EmailProvider from "next-auth/providers/email";
 import { db } from "@/lib/db";
 
 // Automatically detect the correct URL for development
-const getAuthUrl = () => {
+const _getAuthUrl = () => {
   if (process.env.NEXTAUTH_URL) {
     return process.env.NEXTAUTH_URL;
   }

@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useAuth } from "@/components/providers/auth-context";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useAuth } from "@/components/providers/auth-context";
 import { RecipeViewer } from "@/components/recipes/recipe-viewer";
 
 export default function RecipePage({ params }: { params: { id: string } }) {
@@ -19,10 +19,6 @@ export default function RecipePage({ params }: { params: { id: string } }) {
   const [showEditModal, setShowEditModal] = useState(false);
   const [editForm, setEditForm] = useState<any>({});
   const [isUpdatingRecipe, setIsUpdatingRecipe] = useState(false);
-
-  useEffect(() => {
-    fetchRecipe();
-  }, [params.id]);
 
   const fetchRecipe = async () => {
     try {
@@ -47,6 +43,10 @@ export default function RecipePage({ params }: { params: { id: string } }) {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchRecipe();
+  }, [params.id]);
 
   const fetchExistingShare = async () => {
     try {
@@ -103,7 +103,7 @@ export default function RecipePage({ params }: { params: { id: string } }) {
       }
 
       setRecipe((prev: any) => ({ ...prev, privacy }));
-      
+
       // If changing away from "link", clear any existing share
       if (privacy !== "link") {
         setExistingShare(null);
@@ -121,11 +121,14 @@ export default function RecipePage({ params }: { params: { id: string } }) {
 
   const handleRevokeShare = async () => {
     if (!existingShare) return;
-    
+
     try {
-      const response = await fetch(`/api/recipes/${params.id}/share?token=${existingShare.token}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `/api/recipes/${params.id}/share?token=${existingShare.token}`,
+        {
+          method: "DELETE",
+        },
+      );
 
       if (response.ok) {
         setExistingShare(null);
@@ -174,7 +177,11 @@ export default function RecipePage({ params }: { params: { id: string } }) {
   };
 
   const handleDelete = async () => {
-    if (!confirm("Are you sure you want to delete this recipe? This action cannot be undone.")) {
+    if (
+      !confirm(
+        "Are you sure you want to delete this recipe? This action cannot be undone.",
+      )
+    ) {
       return;
     }
 
@@ -228,7 +235,6 @@ export default function RecipePage({ params }: { params: { id: string } }) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {isOwner && (
           <div className="flex justify-end gap-2 mb-4">
@@ -286,6 +292,10 @@ export default function RecipePage({ params }: { params: { id: string } }) {
             <div
               className="fixed inset-0 bg-black bg-opacity-50"
               onClick={() => setShowShareModal(false)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === "Escape" && setShowShareModal(false)}
+              aria-label="Close modal"
             />
 
             <div className="relative bg-white rounded-lg max-w-lg w-full p-6">
@@ -300,12 +310,31 @@ export default function RecipePage({ params }: { params: { id: string } }) {
                 </h4>
                 <div className="grid grid-cols-1 gap-2">
                   {[
-                    { value: "private", label: "Private", desc: "Only you can see this recipe" },
-                    { value: "link", label: "Anyone with link", desc: "Shareable via link only" },
-                    { value: "friends", label: "Friends only", desc: "Visible to your friends" },
-                    { value: "public", label: "Public", desc: "Everyone can discover this recipe" }
+                    {
+                      value: "private",
+                      label: "Private",
+                      desc: "Only you can see this recipe",
+                    },
+                    {
+                      value: "link",
+                      label: "Anyone with link",
+                      desc: "Shareable via link only",
+                    },
+                    {
+                      value: "friends",
+                      label: "Friends only",
+                      desc: "Visible to your friends",
+                    },
+                    {
+                      value: "public",
+                      label: "Public",
+                      desc: "Everyone can discover this recipe",
+                    },
                   ].map((option) => (
-                    <label key={option.value} className="flex items-start gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                    <label
+                      key={option.value}
+                      className="flex items-start gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"
+                    >
                       <input
                         type="radio"
                         name="privacy"
@@ -316,8 +345,12 @@ export default function RecipePage({ params }: { params: { id: string } }) {
                         className="mt-1 text-indigo-600 focus:ring-indigo-500"
                       />
                       <div className="flex-1">
-                        <div className="font-medium text-gray-900">{option.label}</div>
-                        <div className="text-sm text-gray-500">{option.desc}</div>
+                        <div className="font-medium text-gray-900">
+                          {option.label}
+                        </div>
+                        <div className="text-sm text-gray-500">
+                          {option.desc}
+                        </div>
                       </div>
                     </label>
                   ))}
@@ -330,10 +363,12 @@ export default function RecipePage({ params }: { params: { id: string } }) {
                   <h4 className="text-sm font-medium text-gray-700 mb-3">
                     Share Link
                   </h4>
-                  
+
                   {!existingShare ? (
                     <div className="text-center py-4">
-                      <p className="text-sm text-gray-500 mb-3">No share link created yet</p>
+                      <p className="text-sm text-gray-500 mb-3">
+                        No share link created yet
+                      </p>
                       <button
                         onClick={handleCreateShareLink}
                         className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
@@ -364,8 +399,10 @@ export default function RecipePage({ params }: { params: { id: string } }) {
                         </button>
                       </div>
                       <p className="text-xs text-gray-500">
-                        Created: {new Date(existingShare.createdAt).toLocaleDateString()}
-                        {existingShare.expiresAt && ` • Expires: ${new Date(existingShare.expiresAt).toLocaleDateString()}`}
+                        Created:{" "}
+                        {new Date(existingShare.createdAt).toLocaleDateString()}
+                        {existingShare.expiresAt &&
+                          ` • Expires: ${new Date(existingShare.expiresAt).toLocaleDateString()}`}
                       </p>
                     </div>
                   )}
@@ -376,13 +413,26 @@ export default function RecipePage({ params }: { params: { id: string } }) {
               {recipe?.privacy === "public" && (
                 <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
                   <div className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-green-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <svg
+                      className="w-5 h-5 text-green-600 mt-0.5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
                     </svg>
                     <div>
-                      <p className="text-sm font-medium text-green-800">Recipe is Public</p>
+                      <p className="text-sm font-medium text-green-800">
+                        Recipe is Public
+                      </p>
                       <p className="text-sm text-green-700">
-                        This recipe appears in community feeds and can be discovered by anyone.
+                        This recipe appears in community feeds and can be
+                        discovered by anyone.
                       </p>
                     </div>
                   </div>
@@ -393,11 +443,23 @@ export default function RecipePage({ params }: { params: { id: string } }) {
               {recipe?.privacy === "friends" && (
                 <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
                   <div className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    <svg
+                      className="w-5 h-5 text-blue-600 mt-0.5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                      />
                     </svg>
                     <div>
-                      <p className="text-sm font-medium text-blue-800">Visible to Friends</p>
+                      <p className="text-sm font-medium text-blue-800">
+                        Visible to Friends
+                      </p>
                       <p className="text-sm text-blue-700">
                         Only people you've added as friends can see this recipe.
                       </p>
@@ -423,6 +485,10 @@ export default function RecipePage({ params }: { params: { id: string } }) {
             <div
               className="fixed inset-0 bg-black bg-opacity-50"
               onClick={() => setShowEditModal(false)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === "Escape" && setShowEditModal(false)}
+              aria-label="Close modal"
             />
 
             <div className="relative bg-white rounded-lg max-w-md w-full p-6">
@@ -439,7 +505,9 @@ export default function RecipePage({ params }: { params: { id: string } }) {
                   <input
                     type="text"
                     value={editForm.title || ""}
-                    onChange={(e) => setEditForm({...editForm, title: e.target.value})}
+                    onChange={(e) =>
+                      setEditForm({ ...editForm, title: e.target.value })
+                    }
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
                   />
                 </div>
@@ -451,23 +519,51 @@ export default function RecipePage({ params }: { params: { id: string } }) {
                   </label>
                   <div className="space-y-2">
                     {[
-                      { value: "private", label: "Private", desc: "Only you can see this recipe" },
-                      { value: "link", label: "Anyone with link", desc: "Shareable via link only" },
-                      { value: "friends", label: "Friends only", desc: "Visible to your friends" },
-                      { value: "public", label: "Public", desc: "Everyone can discover this recipe" }
+                      {
+                        value: "private",
+                        label: "Private",
+                        desc: "Only you can see this recipe",
+                      },
+                      {
+                        value: "link",
+                        label: "Anyone with link",
+                        desc: "Shareable via link only",
+                      },
+                      {
+                        value: "friends",
+                        label: "Friends only",
+                        desc: "Visible to your friends",
+                      },
+                      {
+                        value: "public",
+                        label: "Public",
+                        desc: "Everyone can discover this recipe",
+                      },
                     ].map((option) => (
-                      <label key={option.value} className="flex items-start gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                      <label
+                        key={option.value}
+                        className="flex items-start gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"
+                      >
                         <input
                           type="radio"
                           name="editPrivacy"
                           value={option.value}
                           checked={editForm.privacy === option.value}
-                          onChange={(e) => setEditForm({...editForm, privacy: e.target.value})}
+                          onChange={(e) =>
+                            setEditForm({
+                              ...editForm,
+                              privacy: e.target.value,
+                            })
+                          }
                           className="mt-1 text-indigo-600 focus:ring-indigo-500"
                         />
                         <div className="flex-1">
-                          <div className="font-medium text-gray-900 text-sm">{option.label}</div>
-                          <div className="text-xs text-gray-500">{option.desc}</div>
+                          <div className="font-medium text-gray-900 text-sm">
+                            {option.label}
+                          </div>
+                          <div className="text-xs text-gray-500">
+                            {option.desc}
+                          </div>
                         </div>
                       </label>
                     ))}

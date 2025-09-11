@@ -1,7 +1,7 @@
 "use client";
 
-import { useAuth } from "@/components/providers/auth-context";
 import { LandingPage } from "@/components/landing-page";
+import { useAuth } from "@/components/providers/auth-context";
 import { PublicRecipeFeed } from "@/components/recipes/public-recipe-feed";
 
 export default function Home() {

@@ -1,15 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useAuth } from "@/components/providers/auth-context";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useAuth } from "@/components/providers/auth-context";
 
 export default function AccountSettingsPage() {
   const { session, status } = useAuth();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setSaving] = useState(false);
-  const [user, setUser] = useState<any>(null);
+  const [_user, setUser] = useState<any>(null);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -18,17 +18,6 @@ export default function AccountSettingsPage() {
   });
   const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
   const [profileImagePreview, setProfileImagePreview] = useState<string>("");
-
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/auth/signin");
-      return;
-    }
-
-    if (status === "authenticated") {
-      fetchUser();
-    }
-  }, [status]);
 
   const fetchUser = async () => {
     try {
@@ -51,6 +40,17 @@ export default function AccountSettingsPage() {
     }
   };
 
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/auth/signin");
+      return;
+    }
+
+    if (status === "authenticated") {
+      fetchUser();
+    }
+  }, [status, router]);
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -71,11 +71,11 @@ export default function AccountSettingsPage() {
     try {
       // First, upload image if there's a new one
       let imageUrl = formData.profileImage;
-      
+
       if (profileImageFile) {
         const imageFormData = new FormData();
         imageFormData.append("image", profileImageFile);
-        
+
         const uploadResponse = await fetch("/api/upload/profile-image", {
           method: "POST",
           body: imageFormData,
@@ -127,12 +127,15 @@ export default function AccountSettingsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white rounded-lg shadow-sm">
           <div className="px-6 py-4 border-b border-gray-200">
-            <h1 className="text-2xl font-bold text-gray-900">Account Settings</h1>
-            <p className="text-gray-600 mt-1">Manage your profile information and preferences</p>
+            <h1 className="text-2xl font-bold text-gray-900">
+              Account Settings
+            </h1>
+            <p className="text-gray-600 mt-1">
+              Manage your profile information and preferences
+            </p>
           </div>
 
           <form onSubmit={handleSubmit} className="p-6 space-y-6">
@@ -225,7 +228,8 @@ export default function AccountSettingsPage() {
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-500"
               />
               <p className="text-sm text-gray-500 mt-1">
-                Email cannot be changed. Contact support if you need to update your email address.
+                Email cannot be changed. Contact support if you need to update
+                your email address.
               </p>
             </div>
 

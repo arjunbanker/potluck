@@ -19,7 +19,29 @@
     "rules": {
       "recommended": true,
       "suspicious": {
-        "noUnknownAtRules": "off"
+        "noUnknownAtRules": "off",
+        "noExplicitAny": "warn",
+        "noImplicitAnyLet": "warn",
+        "noArrayIndexKey": "warn"
+      },
+      "correctness": {
+        "noUnusedVariables": "warn",
+        "noUnusedImports": "warn",
+        "noUnusedFunctionParameters": "warn",
+        "useExhaustiveDependencies": "warn"
+      },
+      "performance": {
+        "noImgElement": "warn"
+      },
+      "a11y": {
+        "noSvgWithoutTitle": "warn",
+        "noLabelWithoutControl": "warn",
+        "useButtonType": "warn",
+        "useSemanticElements": "warn"
+      },
+      "style": {
+        "noNonNullAssertion": "warn",
+        "useImportType": "warn"
       }
     },
     "domains": {

@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
+import { and, eq } from "drizzle-orm";
+import { type NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
+import { z } from "zod";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { generateSlug, UpdateRecipeSchema } from "@/lib/recipe-utils";
 import { recipes, shares } from "@/lib/schema";
-import { UpdateRecipeSchema, generateSlug } from "@/lib/recipe-utils";
-import { eq, and, or } from "drizzle-orm";
-import { z } from "zod";
 
 export async function GET(
   request: NextRequest,
@@ -93,7 +93,7 @@ export async function PATCH(
 
     const [updatedRecipe] = await db
       .update(recipes)
-      .set({ 
+      .set({
         privacy,
         updatedAt: new Date(),
       })
@@ -108,8 +108,8 @@ export async function PATCH(
           and(
             eq(shares.resourceType, "recipe"),
             eq(shares.resourceId, recipeId),
-            eq(shares.sharedBy, session.user.id)
-          )
+            eq(shares.sharedBy, session.user.id),
+          ),
         );
     }
 
@@ -164,8 +164,7 @@ export async function PUT(
 
     if (validatedData.title) {
       updateData.title = validatedData.title;
-      updateData.slug =
-        generateSlug(validatedData.title) + "-" + recipeId.substring(0, 8);
+      updateData.slug = `${generateSlug(validatedData.title)}-${recipeId.substring(0, 8)}`;
     }
 
     if (validatedData.privacy) {
@@ -210,7 +209,7 @@ export async function PUT(
 }
 
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {

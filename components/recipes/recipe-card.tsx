@@ -176,7 +176,7 @@ export function RecipeCard({
                   <span className="font-medium text-gray-700">
                     {contributor.firstName && contributor.lastName
                       ? `${contributor.firstName} ${contributor.lastName}`
-                      : contributor.name || contributor.email.split('@')[0]}
+                      : contributor.name || contributor.email.split("@")[0]}
                   </span>
                 </p>
               </div>

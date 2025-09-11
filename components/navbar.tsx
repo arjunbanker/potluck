@@ -1,9 +1,9 @@
 "use client";
 
-import { signOut } from "next-auth/react";
-import { useAuth } from "@/components/providers/auth-context";
 import Link from "next/link";
-import { useState, useRef, useEffect } from "react";
+import { signOut } from "next-auth/react";
+import { useEffect, useRef, useState } from "react";
+import { useAuth } from "@/components/providers/auth-context";
 
 export function Navbar() {
   const { session, status } = useAuth();
@@ -74,7 +74,7 @@ export function Navbar() {
                   </svg>
                   Import Recipe
                 </Link>
-                
+
                 {/* User Menu */}
                 <div className="relative" ref={menuRef}>
                   <button
@@ -96,9 +96,11 @@ export function Navbar() {
                         />
                       </svg>
                     </div>
-                    <span className="hidden sm:block">{session.user.email}</span>
+                    <span className="hidden sm:block">
+                      {session.user.email}
+                    </span>
                     <svg
-                      className={`w-4 h-4 transition-transform ${showUserMenu ? 'rotate-180' : ''}`}
+                      className={`w-4 h-4 transition-transform ${showUserMenu ? "rotate-180" : ""}`}
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"

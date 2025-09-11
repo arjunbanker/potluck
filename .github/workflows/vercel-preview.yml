@@ -1,0 +1,60 @@
+name: Vercel Preview Deployment
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+on:
+  push:
+    branches-ignore:
+      - main
+
+jobs:
+  type-check-and-deploy:
+    runs-on: ubuntu-latest
+    # Continue even if Vercel secrets are not configured
+    continue-on-error: true
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Run TypeScript type checking
+        run: npm run typecheck
+        
+      - name: Run linting
+        run: npm run lint:build
+        
+      - name: Check for Vercel Token
+        id: check_token
+        run: |
+          if [ -z "${{ secrets.VERCEL_TOKEN }}" ]; then
+            echo "::warning::Vercel deployment skipped - VERCEL_TOKEN secret not configured"
+            echo "has_token=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_token=true" >> $GITHUB_OUTPUT
+          fi
+        
+      - name: Install Vercel CLI
+        if: steps.check_token.outputs.has_token == 'true'
+        run: npm install --global vercel@latest
+        
+      - name: Pull Vercel Environment Information
+        if: steps.check_token.outputs.has_token == 'true'
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+        
+      - name: Build Project Artifacts
+        if: steps.check_token.outputs.has_token == 'true'
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+        
+      - name: Deploy Project Artifacts to Vercel
+        if: steps.check_token.outputs.has_token == 'true'
+        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
