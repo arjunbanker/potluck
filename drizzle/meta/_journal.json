@@ -8,6 +8,20 @@
       "when": 1756507097302,
       "tag": "0000_complex_ulik",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1756853860825,
+      "tag": "0001_funny_jackpot",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1757014320111,
+      "tag": "0002_yielding_wonder_man",
+      "breakpoints": true
     }
   ]
 }
