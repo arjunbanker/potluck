@@ -25,7 +25,7 @@ export function LandingPage() {
 
   useEffect(() => {
     fetchFeaturedRecipes();
-  }, [fetchFeaturedRecipes]);
+  }, []);
 
   return (
     <main className="content-left">
