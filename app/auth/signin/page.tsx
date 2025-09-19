@@ -78,22 +78,41 @@ export default function SignIn() {
                   fill="currentColor"
                   opacity="0.4"
                 />
-                <circle cx="10" cy="14" r="1.5" fill="currentColor" opacity="0.3" />
-                <circle cx="14" cy="12" r="1" fill="currentColor" opacity="0.3" />
-                <circle cx="13" cy="16" r="1" fill="currentColor" opacity="0.3" />
+                <circle
+                  cx="10"
+                  cy="14"
+                  r="1.5"
+                  fill="currentColor"
+                  opacity="0.3"
+                />
+                <circle
+                  cx="14"
+                  cy="12"
+                  r="1"
+                  fill="currentColor"
+                  opacity="0.3"
+                />
+                <circle
+                  cx="13"
+                  cy="16"
+                  r="1"
+                  fill="currentColor"
+                  opacity="0.3"
+                />
               </svg>
               <span className="text-2xl font-bold text-iron-900">Potluck</span>
             </div>
-            <h2 className="text-3xl font-bold text-iron-900">
-              Welcome back
-            </h2>
+            <h2 className="text-3xl font-bold text-iron-900">Welcome back</h2>
             <p className="mt-2 text-iron-600">
               Enter your email to receive a magic link and sign in
             </p>
           </div>
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-iron-700 mb-2">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-iron-700 mb-2"
+              >
                 Email address
               </label>
               <input
@@ -121,9 +140,7 @@ export default function SignIn() {
 
             {message && (
               <div className="mt-4 p-4 rounded-md bg-sage-50 border border-sage-200">
-                <div className="text-sm text-sage-800">
-                  {message}
-                </div>
+                <div className="text-sm text-sage-800">{message}</div>
               </div>
             )}
           </form>
@@ -135,7 +152,8 @@ export default function SignIn() {
         <div className="max-w-md text-center text-white">
           <h3 className="text-2xl font-bold mb-4">Join the Community</h3>
           <p className="text-wood-100 mb-6">
-            Discover amazing recipes, share your favorites, and connect with fellow home cooks from around the world.
+            Discover amazing recipes, share your favorites, and connect with
+            fellow home cooks from around the world.
           </p>
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div className="text-center">

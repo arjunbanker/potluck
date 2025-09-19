@@ -2,9 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { RecipeNavbar } from "@/components/navbar-recipe";
 import { useAuth } from "@/components/providers/auth-context";
 import { RecipeViewer } from "@/components/recipes/recipe-viewer";
-import { RecipeNavbar } from "@/components/navbar-recipe";
 
 export default function RecipePage({ params }: { params: { id: string } }) {
   const { session } = useAuth();
@@ -49,7 +49,7 @@ export default function RecipePage({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     fetchRecipe();
-  }, [params.id]);
+  }, [fetchRecipe]);
 
   const fetchExistingShare = async () => {
     try {
@@ -245,7 +245,7 @@ export default function RecipePage({ params }: { params: { id: string } }) {
         onShare={isOwner ? handleShare : undefined}
         isOwner={isOwner}
       />
-      
+
       <main className="content-left py-8">
         <div className="recipe-layout">
           <RecipeViewer

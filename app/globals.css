@@ -2,68 +2,68 @@
 
 :root {
   /* Linen color palette */
-  --linen-50: #FAF8F5;
-  --linen-100: #F5F1EA;
-  --linen-200: #EDE6DA;
-  --linen-300: #E3D9C8;
-  --linen-400: #D7C9B3;
-  --linen-500: #C8B59E;
-  --linen-600: #B39F88;
-  
+  --linen-50: #faf8f5;
+  --linen-100: #f5f1ea;
+  --linen-200: #ede6da;
+  --linen-300: #e3d9c8;
+  --linen-400: #d7c9b3;
+  --linen-500: #c8b59e;
+  --linen-600: #b39f88;
+
   /* Cast iron grays */
-  --iron-50: #F7F7F6;
-  --iron-100: #E8E7E5;
-  --iron-200: #D1CFCC;
-  --iron-300: #A8A5A0;
-  --iron-400: #7F7B74;
-  --iron-500: #5C5953;
-  --iron-600: #3D3B37;
-  --iron-700: #2B2925;
-  --iron-800: #1F1E1B;
+  --iron-50: #f7f7f6;
+  --iron-100: #e8e7e5;
+  --iron-200: #d1cfcc;
+  --iron-300: #a8a5a0;
+  --iron-400: #7f7b74;
+  --iron-500: #5c5953;
+  --iron-600: #3d3b37;
+  --iron-700: #2b2925;
+  --iron-800: #1f1e1b;
   --iron-900: #141311;
-  
+
   /* Dark woodsy accents */
-  --wood-50: #F8F6F4;
-  --wood-100: #EDE8E3;
-  --wood-200: #D9CFC4;
-  --wood-300: #BCA595;
-  --wood-400: #9F7B66;
-  --wood-500: #7A5843;
-  --wood-600: #5C4232;
-  --wood-700: #4A3428;
+  --wood-50: #f8f6f4;
+  --wood-100: #ede8e3;
+  --wood-200: #d9cfc4;
+  --wood-300: #bca595;
+  --wood-400: #9f7b66;
+  --wood-500: #7a5843;
+  --wood-600: #5c4232;
+  --wood-700: #4a3428;
   --wood-800: #362518;
   --wood-900: #241810;
-  
+
   /* Sage (herbs) */
-  --sage-50: #F6F8F5;
-  --sage-100: #E8EDDF;
-  --sage-200: #D4DCC5;
-  --sage-300: #B8C5A3;
-  --sage-400: #9CAE81;
-  --sage-500: #7E9261;
+  --sage-50: #f6f8f5;
+  --sage-100: #e8eddf;
+  --sage-200: #d4dcc5;
+  --sage-300: #b8c5a3;
+  --sage-400: #9cae81;
+  --sage-500: #7e9261;
   --sage-600: #647549;
-  --sage-700: #4D5A38;
-  
+  --sage-700: #4d5a38;
+
   /* Tomato */
-  --tomato-50: #FDF5F4;
-  --tomato-100: #FAE8E5;
-  --tomato-200: #F4C9C2;
-  --tomato-300: #E89B8F;
-  --tomato-400: #DC6D5C;
-  --tomato-500: #C94A3B;
-  --tomato-600: #A63829;
-  --tomato-700: #832C20;
-  
+  --tomato-50: #fdf5f4;
+  --tomato-100: #fae8e5;
+  --tomato-200: #f4c9c2;
+  --tomato-300: #e89b8f;
+  --tomato-400: #dc6d5c;
+  --tomato-500: #c94a3b;
+  --tomato-600: #a63829;
+  --tomato-700: #832c20;
+
   /* Butter */
-  --butter-50: #FFFDF7;
-  --butter-100: #FFF9E6;
-  --butter-200: #FFF2C7;
-  --butter-300: #FFE599;
-  --butter-400: #FFD666;
-  --butter-500: #FFC533;
-  --butter-600: #E6A714;
-  --butter-700: #B38410;
-  
+  --butter-50: #fffdf7;
+  --butter-100: #fff9e6;
+  --butter-200: #fff2c7;
+  --butter-300: #ffe599;
+  --butter-400: #ffd666;
+  --butter-500: #ffc533;
+  --butter-600: #e6a714;
+  --butter-700: #b38410;
+
   /* Semantic mappings */
   --background: var(--linen-50);
   --foreground: var(--iron-900);
@@ -88,7 +88,7 @@
   --color-linen-400: var(--linen-400);
   --color-linen-500: var(--linen-500);
   --color-linen-600: var(--linen-600);
-  
+
   --color-iron-50: var(--iron-50);
   --color-iron-100: var(--iron-100);
   --color-iron-200: var(--iron-200);
@@ -99,7 +99,7 @@
   --color-iron-700: var(--iron-700);
   --color-iron-800: var(--iron-800);
   --color-iron-900: var(--iron-900);
-  
+
   --color-wood-50: var(--wood-50);
   --color-wood-100: var(--wood-100);
   --color-wood-200: var(--wood-200);
@@ -110,7 +110,7 @@
   --color-wood-700: var(--wood-700);
   --color-wood-800: var(--wood-800);
   --color-wood-900: var(--wood-900);
-  
+
   --color-sage-50: var(--sage-50);
   --color-sage-100: var(--sage-100);
   --color-sage-200: var(--sage-200);
@@ -119,7 +119,7 @@
   --color-sage-500: var(--sage-500);
   --color-sage-600: var(--sage-600);
   --color-sage-700: var(--sage-700);
-  
+
   --color-tomato-50: var(--tomato-50);
   --color-tomato-100: var(--tomato-100);
   --color-tomato-200: var(--tomato-200);
@@ -128,7 +128,7 @@
   --color-tomato-500: var(--tomato-500);
   --color-tomato-600: var(--tomato-600);
   --color-tomato-700: var(--tomato-700);
-  
+
   --color-butter-50: var(--butter-50);
   --color-butter-100: var(--butter-100);
   --color-butter-200: var(--butter-200);
@@ -137,7 +137,7 @@
   --color-butter-500: var(--butter-500);
   --color-butter-600: var(--butter-600);
   --color-butter-700: var(--butter-700);
-  
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);

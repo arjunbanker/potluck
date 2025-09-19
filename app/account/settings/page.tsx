@@ -59,7 +59,7 @@ export default function AccountSettingsPage() {
     if (status === "authenticated") {
       fetchUser();
     }
-  }, [status, router]);
+  }, [status, router, fetchUser]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

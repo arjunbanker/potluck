@@ -19,7 +19,7 @@ export function PotluckIcon({ className = "", size = 24 }: PotluckIconProps) {
         fill="currentColor"
         opacity="0.8"
       />
-      
+
       {/* Pot handles */}
       <path
         d="M5 11C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13H6V11H5Z"
@@ -31,7 +31,7 @@ export function PotluckIcon({ className = "", size = 24 }: PotluckIconProps) {
         fill="currentColor"
         opacity="0.6"
       />
-      
+
       {/* Steam/warmth lines */}
       <path
         d="M9 5C9 4.44772 9.44772 4 10 4C10.5523 4 11 4.44772 11 5V7C11 7.55228 10.5523 8 10 8C9.44772 8 9 7.55228 9 7V5Z"
@@ -48,7 +48,7 @@ export function PotluckIcon({ className = "", size = 24 }: PotluckIconProps) {
         fill="currentColor"
         opacity="0.4"
       />
-      
+
       {/* Content/food in pot */}
       <circle cx="10" cy="14" r="1.5" fill="currentColor" opacity="0.3" />
       <circle cx="14" cy="12" r="1" fill="currentColor" opacity="0.3" />

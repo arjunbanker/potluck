@@ -9,7 +9,7 @@ import { RecipeCard } from "@/components/recipes/recipe-card";
 export default function Dashboard() {
   const { session, status } = useAuth();
   const [recipes, setRecipes] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [_isLoading, setIsLoading] = useState(true);
   const [showImportModal, setShowImportModal] = useState(false);
   const [filter, setFilter] = useState<"all" | "private" | "public">("all");
 
@@ -45,7 +45,7 @@ export default function Dashboard() {
       // Reset loading state if user is unauthenticated
       setIsLoading(false);
     }
-  }, [status]);
+  }, [status, fetchRecipes]);
 
   // Show minimal loading state
   if (status === "loading") {

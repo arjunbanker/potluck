@@ -368,7 +368,8 @@ export function RecipeViewer({ title, data, source, user }: RecipeViewerProps) {
                       className="group flex items-center gap-1 text-sm text-sage-600 hover:text-sage-700"
                     >
                       <span className="truncate">
-                        {source.title || new URL(source.url).hostname.replace('www.', '')}
+                        {source.title ||
+                          new URL(source.url).hostname.replace("www.", "")}
                       </span>
                       <svg
                         className="shrink-0 w-4 h-4 opacity-60 group-hover:opacity-100 transition-opacity"
@@ -401,8 +402,8 @@ export function RecipeViewer({ title, data, source, user }: RecipeViewerProps) {
                   <div className="shrink-0">
                     {user.profileImage || user.image ? (
                       <img
-                        src={user.profileImage || user.image || ''}
-                        alt={user.name || 'User'}
+                        src={user.profileImage || user.image || ""}
+                        alt={user.name || "User"}
                         className="w-10 h-10 rounded-full object-cover"
                       />
                     ) : (
@@ -428,7 +429,7 @@ export function RecipeViewer({ title, data, source, user }: RecipeViewerProps) {
                     <p className="font-medium text-iron-900">
                       {user.firstName && user.lastName
                         ? `${user.firstName} ${user.lastName}`
-                        : user.name || user.email.split('@')[0]}
+                        : user.name || user.email.split("@")[0]}
                     </p>
                   </div>
                 </div>

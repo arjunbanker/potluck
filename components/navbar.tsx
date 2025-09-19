@@ -28,7 +28,10 @@ export function Navbar() {
       <div className="content-left">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center gap-3">
-            <Link href="/" className="flex items-center gap-3 text-iron-900 hover:text-wood-600 transition-colors">
+            <Link
+              href="/"
+              className="flex items-center gap-3 text-iron-900 hover:text-wood-600 transition-colors"
+            >
               <svg
                 width="28"
                 height="28"
@@ -66,9 +69,27 @@ export function Navbar() {
                   fill="currentColor"
                   opacity="0.4"
                 />
-                <circle cx="10" cy="14" r="1.5" fill="currentColor" opacity="0.3" />
-                <circle cx="14" cy="12" r="1" fill="currentColor" opacity="0.3" />
-                <circle cx="13" cy="16" r="1" fill="currentColor" opacity="0.3" />
+                <circle
+                  cx="10"
+                  cy="14"
+                  r="1.5"
+                  fill="currentColor"
+                  opacity="0.3"
+                />
+                <circle
+                  cx="14"
+                  cy="12"
+                  r="1"
+                  fill="currentColor"
+                  opacity="0.3"
+                />
+                <circle
+                  cx="13"
+                  cy="16"
+                  r="1"
+                  fill="currentColor"
+                  opacity="0.3"
+                />
               </svg>
               <span className="text-xl font-bold">Potluck</span>
             </Link>
@@ -94,8 +115,18 @@ export function Navbar() {
                   href="/dashboard"
                   className="text-sm text-iron-700 hover:text-iron-900 font-medium flex items-center gap-1"
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                    />
                   </svg>
                   <span className="hidden sm:inline">My Recipes</span>
                 </Link>
