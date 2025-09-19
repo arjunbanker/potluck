@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "setup": "# Copy configuration files\ncp \"$CONDUCTOR_ROOT_PATH/.env.local\" .\n\n# Install dependencies\nyarn install",
+    "run": "bash ; echo 'hi';"
+  },
+  "runScriptMode": "nonconcurrent"
+}
