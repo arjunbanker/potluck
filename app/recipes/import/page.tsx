@@ -21,9 +21,9 @@ export default function ImportRecipePage() {
   // Show loading while session is loading
   if (status === "loading") {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="text-center">Loading...</div>
+      <div className="min-h-screen bg-linen-50">
+        <div className="content-left py-8">
+          <div className="text-center text-iron-500">Loading...</div>
         </div>
       </div>
     );
@@ -32,11 +32,11 @@ export default function ImportRecipePage() {
   // Show sign-in prompt for unauthenticated users (no redirect)
   if (status === "unauthenticated") {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="bg-white rounded-lg shadow-sm p-12 text-center">
+      <div className="min-h-screen bg-linen-50">
+        <div className="content-left py-8">
+          <div className="max-w-md mx-auto bg-white rounded-lg shadow-sm p-12 text-center">
             <svg
-              className="mx-auto h-12 w-12 text-gray-400"
+              className="mx-auto h-12 w-12 text-iron-400"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -48,15 +48,15 @@ export default function ImportRecipePage() {
                 d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
               />
             </svg>
-            <h3 className="mt-2 text-xl font-medium text-gray-900">
+            <h3 className="mt-2 text-xl font-medium text-iron-900">
               Sign in required
             </h3>
-            <p className="mt-1 text-gray-500 mb-6">
+            <p className="mt-1 text-iron-600 mb-6">
               Please sign in to import recipes to your collection.
             </p>
             <button
               onClick={() => router.push("/auth/signin")}
-              className="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+              className="inline-flex items-center px-4 py-2 bg-wood-500 text-white rounded-lg hover:bg-wood-600 transition-colors"
             >
               Sign In
             </button>
@@ -113,14 +113,14 @@ export default function ImportRecipePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <main className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white rounded-lg shadow-sm p-8">
+    <div className="min-h-screen bg-linen-50">
+      <main className="content-left py-8">
+        <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-sm p-8">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl font-bold text-iron-900 mb-2">
               Import Recipe
             </h1>
-            <p className="text-gray-600">
+            <p className="text-iron-600">
               Add recipes from URLs or paste text directly
             </p>
           </div>
@@ -130,8 +130,8 @@ export default function ImportRecipePage() {
               onClick={() => setActiveTab("url")}
               className={`flex-1 py-3 px-4 rounded-lg font-medium transition-colors ${
                 activeTab === "url"
-                  ? "bg-indigo-600 text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  ? "bg-wood-500 text-white"
+                  : "bg-linen-100 text-iron-700 hover:bg-linen-200 border border-linen-300"
               }`}
             >
               <div className="flex items-center justify-center gap-2">
@@ -155,8 +155,8 @@ export default function ImportRecipePage() {
               onClick={() => setActiveTab("text")}
               className={`flex-1 py-3 px-4 rounded-lg font-medium transition-colors ${
                 activeTab === "text"
-                  ? "bg-indigo-600 text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  ? "bg-wood-500 text-white"
+                  : "bg-linen-100 text-iron-700 hover:bg-linen-200 border border-linen-300"
               }`}
             >
               <div className="flex items-center justify-center gap-2">
@@ -183,7 +183,7 @@ export default function ImportRecipePage() {
               <div>
                 <label
                   htmlFor="url"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-iron-700 mb-2"
                 >
                   Recipe URL
                 </label>
@@ -193,9 +193,9 @@ export default function ImportRecipePage() {
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
                   placeholder="https://example.com/recipe"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full px-4 py-3 border border-linen-300 rounded-lg focus:ring-wood-500 focus:border-wood-500"
                 />
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-sm text-iron-500 mt-1">
                   Paste any recipe URL from sites like AllRecipes, Food Network,
                   NYT Cooking, etc.
                 </p>
@@ -206,7 +206,7 @@ export default function ImportRecipePage() {
               <div>
                 <label
                   htmlFor="title"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-iron-700 mb-2"
                 >
                   Recipe Title (optional)
                 </label>
@@ -216,14 +216,14 @@ export default function ImportRecipePage() {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="My Favorite Recipe"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full px-4 py-3 border border-linen-300 rounded-lg focus:ring-wood-500 focus:border-wood-500"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor="text"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-iron-700 mb-2"
                 >
                   Recipe Text
                 </label>
@@ -233,9 +233,9 @@ export default function ImportRecipePage() {
                   onChange={(e) => setText(e.target.value)}
                   placeholder="Paste your recipe here... Include ingredients, instructions, and any other details."
                   rows={10}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full px-4 py-3 border border-linen-300 rounded-lg focus:ring-wood-500 focus:border-wood-500"
                 />
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-sm text-iron-500 mt-1">
                   Paste recipe text from anywhere - cookbooks, emails,
                   handwritten notes, etc.
                 </p>
@@ -244,7 +244,7 @@ export default function ImportRecipePage() {
           )}
 
           <div className="mt-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-iron-700 mb-2">
               Privacy Setting
             </label>
             <select
@@ -260,21 +260,21 @@ export default function ImportRecipePage() {
           </div>
 
           {error && (
-            <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-sm text-red-600">{error}</p>
+            <div className="mt-6 p-4 bg-tomato-50 border border-tomato-200 rounded-lg">
+              <p className="text-sm text-tomato-700">{error}</p>
             </div>
           )}
 
           {success && (
-            <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-              <p className="text-sm text-green-600">{success}</p>
+            <div className="mt-6 p-4 bg-sage-50 border border-sage-200 rounded-lg">
+              <p className="text-sm text-sage-700">{success}</p>
             </div>
           )}
 
           <div className="mt-8 flex gap-4">
             <button
               onClick={() => router.push("/dashboard")}
-              className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium"
+              className="flex-1 px-6 py-3 border border-linen-300 text-iron-700 rounded-lg hover:bg-linen-50 font-medium"
             >
               Cancel
             </button>
@@ -283,17 +283,17 @@ export default function ImportRecipePage() {
               disabled={
                 isLoading || (activeTab === "url" ? !url.trim() : !text.trim())
               }
-              className="flex-1 px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+              className="flex-1 px-6 py-3 bg-wood-500 text-white rounded-lg hover:bg-wood-600 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
             >
               {isLoading ? "Importing..." : "Import Recipe"}
             </button>
           </div>
 
-          <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-            <h3 className="text-sm font-medium text-blue-900 mb-2">
+          <div className="mt-6 p-4 bg-sage-50 border border-sage-200 rounded-lg">
+            <h3 className="text-sm font-medium text-sage-800 mb-2">
               How it works:
             </h3>
-            <ul className="text-sm text-blue-800 space-y-1">
+            <ul className="text-sm text-sage-700 space-y-1">
               <li>
                 • AI automatically extracts ingredients, instructions, and
                 details

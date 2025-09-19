@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { RecipeNavbar } from "@/components/navbar-recipe";
 import { useAuth } from "@/components/providers/auth-context";
 import { RecipeViewer } from "@/components/recipes/recipe-viewer";
 
@@ -9,6 +10,7 @@ export default function RecipePage({ params }: { params: { id: string } }) {
   const { session } = useAuth();
   const router = useRouter();
   const [recipe, setRecipe] = useState<any>(null);
+  const [recipeUser, setRecipeUser] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const [shareUrl, setShareUrl] = useState("");
@@ -36,6 +38,7 @@ export default function RecipePage({ params }: { params: { id: string } }) {
 
       const data = await response.json();
       setRecipe(data.recipe);
+      setRecipeUser(data.user);
     } catch (error) {
       console.error("Error fetching recipe:", error);
       setError("Failed to load recipe");
@@ -46,7 +49,7 @@ export default function RecipePage({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     fetchRecipe();
-  }, [params.id]);
+  }, [fetchRecipe]);
 
   const fetchExistingShare = async () => {
     try {
@@ -234,56 +237,24 @@ export default function RecipePage({ params }: { params: { id: string } }) {
   const isOwner = recipe?.userId === session?.user?.id;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {isOwner && (
-          <div className="flex justify-end gap-2 mb-4">
-            <button
-              onClick={handleEdit}
-              className="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 flex items-center gap-2"
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                />
-              </svg>
-              Edit
-            </button>
-            <button
-              onClick={handleShare}
-              className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 flex items-center gap-2"
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m9.032 4.026a9.001 9.001 0 01-7.432 0m9.032-4.026A9.001 9.001 0 0112 3c-4.474 0-8.268 3.12-9.032 7.326m0 0A9.001 9.001 0 0012 21c4.474 0 8.268-3.12 9.032-7.326"
-                />
-              </svg>
-              Share
-            </button>
-          </div>
-        )}
+    <div className="min-h-screen bg-linen-50">
+      <RecipeNavbar
+        recipeTitle={recipe?.title}
+        recipeId={recipe?.id}
+        onEdit={isOwner ? handleEdit : undefined}
+        onShare={isOwner ? handleShare : undefined}
+        isOwner={isOwner}
+      />
 
-        <RecipeViewer
-          title={recipe.title}
-          data={recipe.data}
-          source={recipe.source}
-        />
+      <main className="content-left py-8">
+        <div className="recipe-layout">
+          <RecipeViewer
+            title={recipe.title}
+            data={recipe.data}
+            source={recipe.source}
+            user={recipeUser}
+          />
+        </div>
       </main>
 
       {showShareModal && (

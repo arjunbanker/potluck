@@ -9,7 +9,7 @@ import { RecipeCard } from "@/components/recipes/recipe-card";
 export default function Dashboard() {
   const { session, status } = useAuth();
   const [recipes, setRecipes] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [_isLoading, setIsLoading] = useState(true);
   const [showImportModal, setShowImportModal] = useState(false);
   const [filter, setFilter] = useState<"all" | "private" | "public">("all");
 
@@ -45,35 +45,33 @@ export default function Dashboard() {
       // Reset loading state if user is unauthenticated
       setIsLoading(false);
     }
-  }, [status]);
+  }, [status, fetchRecipes]);
 
-  // Show loading while session or recipes are loading
-  if (status === "loading" || (status === "authenticated" && isLoading)) {
+  // Show minimal loading state
+  if (status === "loading") {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex items-center justify-center h-64">
-            <div className="text-gray-500">Loading...</div>
-          </div>
+      <div className="min-h-screen bg-linen-50">
+        <div className="content-left py-8">
+          <div className="h-64"></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen bg-linen-50">
+      <main className="content-left py-8">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">My Recipes</h1>
-            <p className="mt-1 text-gray-600">
+            <h1 className="text-3xl font-bold text-iron-900">My Recipes</h1>
+            <p className="mt-1 text-iron-600">
               Welcome back, {session?.user?.email}!
             </p>
           </div>
 
           <button
             onClick={() => setShowImportModal(true)}
-            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center gap-2"
+            className="px-4 py-2 bg-sage-500 text-white rounded-lg hover:bg-sage-600 transition-colors flex items-center gap-2"
           >
             <svg
               className="w-5 h-5"
@@ -100,8 +98,8 @@ export default function Dashboard() {
                 onClick={() => setFilter(filterOption)}
                 className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                   filter === filterOption
-                    ? "bg-indigo-600 text-white"
-                    : "bg-white text-gray-700 hover:bg-gray-50"
+                    ? "bg-wood-500 text-white"
+                    : "bg-white text-iron-700 hover:bg-linen-50 border border-linen-300"
                 }`}
               >
                 {filterOption.charAt(0).toUpperCase() + filterOption.slice(1)}
@@ -111,7 +109,7 @@ export default function Dashboard() {
 
           <Link
             href="/"
-            className="px-4 py-2 text-indigo-600 bg-indigo-50 border border-indigo-200 rounded-lg hover:bg-indigo-100 transition-colors flex items-center gap-2"
+            className="px-4 py-2 text-sage-600 bg-sage-50 border border-sage-200 rounded-lg hover:bg-sage-100 transition-colors flex items-center gap-2"
           >
             <svg
               className="w-4 h-4"
@@ -133,7 +131,7 @@ export default function Dashboard() {
         {recipes.length === 0 ? (
           <div className="bg-white rounded-lg shadow-sm p-12 text-center">
             <svg
-              className="mx-auto h-12 w-12 text-gray-400"
+              className="mx-auto h-12 w-12 text-iron-400"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -145,21 +143,21 @@ export default function Dashboard() {
                 d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
               />
             </svg>
-            <h3 className="mt-2 text-lg font-medium text-gray-900">
+            <h3 className="mt-2 text-lg font-medium text-iron-900">
               No recipes yet
             </h3>
-            <p className="mt-1 text-gray-500">
+            <p className="mt-1 text-iron-500">
               Get started by importing your first recipe.
             </p>
             <button
               onClick={() => setShowImportModal(true)}
-              className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+              className="mt-4 px-4 py-2 bg-wood-500 text-white rounded-lg hover:bg-wood-600 transition-colors"
             >
               Import Your First Recipe
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="recipe-grid">
             {recipes.map((recipe) => (
               <RecipeCard
                 key={recipe.id}

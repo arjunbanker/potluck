@@ -5,7 +5,7 @@ import { z } from "zod";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { generateSlug, UpdateRecipeSchema } from "@/lib/recipe-utils";
-import { recipes, shares } from "@/lib/schema";
+import { recipes, shares, users } from "@/lib/schema";
 
 export async function GET(
   request: NextRequest,
@@ -34,6 +34,21 @@ export async function GET(
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
 
+    // Fetch user information for the recipe owner
+    const [recipeOwner] = await db
+      .select({
+        id: users.id,
+        name: users.name,
+        firstName: users.firstName,
+        lastName: users.lastName,
+        email: users.email,
+        image: users.image,
+        profileImage: users.profileImage,
+      })
+      .from(users)
+      .where(eq(users.id, recipe.userId))
+      .limit(1);
+
     if (recipe.privacy === "public" || recipe.userId !== session?.user?.id) {
       const currentViewCount = (recipe.data.viewCount || 0) as number;
       await db
@@ -47,7 +62,7 @@ export async function GET(
         .where(eq(recipes.id, recipeId));
     }
 
-    return NextResponse.json({ recipe });
+    return NextResponse.json({ recipe, user: recipeOwner });
   } catch (error) {
     console.error("Error fetching recipe:", error);
     return NextResponse.json(

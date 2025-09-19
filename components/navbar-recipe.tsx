@@ -3,9 +3,24 @@
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
+import { PotluckIcon } from "@/components/icons/potluck-icon";
 import { useAuth } from "@/components/providers/auth-context";
 
-export function Navbar() {
+interface RecipeNavbarProps {
+  recipeTitle?: string;
+  recipeId?: string;
+  onEdit?: () => void;
+  onShare?: () => void;
+  isOwner?: boolean;
+}
+
+export function RecipeNavbar({
+  recipeTitle,
+  recipeId,
+  onEdit,
+  onShare,
+  isOwner,
+}: RecipeNavbarProps) {
   const { session, status } = useAuth();
   const [showUserMenu, setShowUserMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -24,80 +39,36 @@ export function Navbar() {
   }, []);
 
   return (
-    <nav className="bg-white shadow-sm border-b border-linen-300">
-      <div className="content-left">
+    <nav className="bg-white shadow-sm border-b border-linen-300 sticky top-0 z-50">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <div className="flex items-center gap-3">
+          {/* Left: Minimal Logo */}
+          <div className="flex items-center">
             <Link
               href="/"
-              className="flex items-center gap-3 text-iron-900 hover:text-wood-600 transition-colors"
+              className="flex items-center text-wood-600 hover:text-wood-700"
             >
-              <svg
-                width="28"
-                height="28"
-                viewBox="0 0 24 24"
-                fill="none"
-                className="text-wood-600"
-              >
-                <path
-                  d="M6 10C6 8.89543 6.89543 8 8 8H16C17.1046 8 18 8.89543 18 10V18C18 19.1046 17.1046 20 16 20H8C6.89543 20 6 19.1046 6 18V10Z"
-                  fill="currentColor"
-                  opacity="0.8"
-                />
-                <path
-                  d="M5 11C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13H6V11H5Z"
-                  fill="currentColor"
-                  opacity="0.6"
-                />
-                <path
-                  d="M18 11V13H19C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11H18Z"
-                  fill="currentColor"
-                  opacity="0.6"
-                />
-                <path
-                  d="M9 5C9 4.44772 9.44772 4 10 4C10.5523 4 11 4.44772 11 5V7C11 7.55228 10.5523 8 10 8C9.44772 8 9 7.55228 9 7V5Z"
-                  fill="currentColor"
-                  opacity="0.4"
-                />
-                <path
-                  d="M12 3C12 2.44772 12.4477 2 13 2C13.5523 2 14 2.44772 14 3V6C14 6.55228 13.5523 7 13 7C12.4477 7 12 6.55228 12 6V3Z"
-                  fill="currentColor"
-                  opacity="0.4"
-                />
-                <path
-                  d="M15 5C15 4.44772 15.4477 4 16 4C16.5523 4 17 4.44772 17 5V7C17 7.55228 16.5523 8 16 8C15.4477 8 15 7.55228 15 7V5Z"
-                  fill="currentColor"
-                  opacity="0.4"
-                />
-                <circle
-                  cx="10"
-                  cy="14"
-                  r="1.5"
-                  fill="currentColor"
-                  opacity="0.3"
-                />
-                <circle
-                  cx="14"
-                  cy="12"
-                  r="1"
-                  fill="currentColor"
-                  opacity="0.3"
-                />
-                <circle
-                  cx="13"
-                  cy="16"
-                  r="1"
-                  fill="currentColor"
-                  opacity="0.3"
-                />
-              </svg>
-              <span className="text-xl font-bold">Potluck</span>
+              <PotluckIcon size={28} className="text-wood-600" />
             </Link>
           </div>
 
-          <div className="flex items-center space-x-4">
+          {/* Center: Recipe Title */}
+          <div className="flex-1 flex justify-center">
+            <div className="max-w-2xl mx-4">
+              {recipeTitle && (
+                <div className="text-center">
+                  <h1 className="text-lg font-semibold text-iron-900 truncate">
+                    {recipeTitle}
+                  </h1>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Right: Actions & User Menu */}
+          <div className="flex items-center space-x-3">
             {status === "loading" && (
-              <div className="w-4 h-4 border-2 border-wood-200 border-t-wood-500 rounded-full animate-spin"></div>
+              <div className="text-sm text-iron-500">Loading...</div>
             )}
 
             {status === "unauthenticated" && (
@@ -110,45 +81,50 @@ export function Navbar() {
             )}
 
             {status === "authenticated" && session?.user && (
-              <div className="flex items-center space-x-3">
-                <Link
-                  href="/dashboard"
-                  className="text-sm text-iron-700 hover:text-iron-900 font-medium flex items-center gap-1"
-                >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-                    />
-                  </svg>
-                  <span className="hidden sm:inline">My Recipes</span>
-                </Link>
-                <Link
-                  href="/recipes/import"
-                  className="bg-sage-500 hover:bg-sage-600 text-white px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1"
-                >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 4v16m8-8H4"
-                    />
-                  </svg>
-                  Import Recipe
-                </Link>
+              <>
+                {/* Recipe Actions */}
+                {isOwner && onEdit && onShare && (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={onEdit}
+                      className="px-3 py-1.5 text-sm bg-white border border-linen-300 text-iron-700 rounded-md hover:bg-linen-100 flex items-center gap-1"
+                    >
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                        />
+                      </svg>
+                      Edit
+                    </button>
+                    <button
+                      onClick={onShare}
+                      className="px-3 py-1.5 text-sm bg-sage-500 hover:bg-sage-600 text-white rounded-md flex items-center gap-1"
+                    >
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m9.032 4.026a9.001 9.001 0 01-7.432 0m9.032-4.026A9.001 9.001 0 0112 3c-4.474 0-8.268 3.12-9.032 7.326m0 0A9.001 9.001 0 0012 21c4.474 0 8.268-3.12 9.032-7.326"
+                        />
+                      </svg>
+                      Share
+                    </button>
+                  </div>
+                )}
 
                 {/* User Menu */}
                 <div className="relative" ref={menuRef}>
@@ -171,9 +147,6 @@ export function Navbar() {
                         />
                       </svg>
                     </div>
-                    <span className="hidden sm:block">
-                      {session.user.email}
-                    </span>
                     <svg
                       className={`w-4 h-4 transition-transform ${showUserMenu ? "rotate-180" : ""}`}
                       fill="none"
@@ -200,6 +173,50 @@ export function Navbar() {
                             {session.user.email}
                           </p>
                         </div>
+                        <Link
+                          href="/"
+                          onClick={() => setShowUserMenu(false)}
+                          className="block px-4 py-2 text-sm text-iron-700 hover:bg-linen-100 hover:text-iron-900"
+                        >
+                          <div className="flex items-center">
+                            <svg
+                              className="w-4 h-4 mr-3"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                              />
+                            </svg>
+                            Home
+                          </div>
+                        </Link>
+                        <Link
+                          href="/dashboard"
+                          onClick={() => setShowUserMenu(false)}
+                          className="block px-4 py-2 text-sm text-iron-700 hover:bg-linen-100 hover:text-iron-900"
+                        >
+                          <div className="flex items-center">
+                            <svg
+                              className="w-4 h-4 mr-3"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                              />
+                            </svg>
+                            My Recipes
+                          </div>
+                        </Link>
                         <Link
                           href="/account/settings"
                           onClick={() => setShowUserMenu(false)}
@@ -256,11 +273,32 @@ export function Navbar() {
                     </div>
                   )}
                 </div>
-              </div>
+              </>
             )}
           </div>
         </div>
       </div>
+
+      {/* Breadcrumb */}
+      {recipeTitle && (
+        <div className="bg-linen-50 border-b border-linen-200">
+          <div className="w-full px-4 sm:px-6 lg:px-8">
+            <div className="py-2">
+              <nav className="flex text-sm text-iron-500">
+                <Link href="/" className="hover:text-iron-700">
+                  Home
+                </Link>
+                <span className="mx-2">/</span>
+                <Link href="/dashboard" className="hover:text-iron-700">
+                  Recipes
+                </Link>
+                <span className="mx-2">/</span>
+                <span className="text-iron-700 truncate">{recipeTitle}</span>
+              </nav>
+            </div>
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
