@@ -1,26 +1,314 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Linen color palette */
+  --linen-50: #FAF8F5;
+  --linen-100: #F5F1EA;
+  --linen-200: #EDE6DA;
+  --linen-300: #E3D9C8;
+  --linen-400: #D7C9B3;
+  --linen-500: #C8B59E;
+  --linen-600: #B39F88;
+  
+  /* Cast iron grays */
+  --iron-50: #F7F7F6;
+  --iron-100: #E8E7E5;
+  --iron-200: #D1CFCC;
+  --iron-300: #A8A5A0;
+  --iron-400: #7F7B74;
+  --iron-500: #5C5953;
+  --iron-600: #3D3B37;
+  --iron-700: #2B2925;
+  --iron-800: #1F1E1B;
+  --iron-900: #141311;
+  
+  /* Dark woodsy accents */
+  --wood-50: #F8F6F4;
+  --wood-100: #EDE8E3;
+  --wood-200: #D9CFC4;
+  --wood-300: #BCA595;
+  --wood-400: #9F7B66;
+  --wood-500: #7A5843;
+  --wood-600: #5C4232;
+  --wood-700: #4A3428;
+  --wood-800: #362518;
+  --wood-900: #241810;
+  
+  /* Sage (herbs) */
+  --sage-50: #F6F8F5;
+  --sage-100: #E8EDDF;
+  --sage-200: #D4DCC5;
+  --sage-300: #B8C5A3;
+  --sage-400: #9CAE81;
+  --sage-500: #7E9261;
+  --sage-600: #647549;
+  --sage-700: #4D5A38;
+  
+  /* Tomato */
+  --tomato-50: #FDF5F4;
+  --tomato-100: #FAE8E5;
+  --tomato-200: #F4C9C2;
+  --tomato-300: #E89B8F;
+  --tomato-400: #DC6D5C;
+  --tomato-500: #C94A3B;
+  --tomato-600: #A63829;
+  --tomato-700: #832C20;
+  
+  /* Butter */
+  --butter-50: #FFFDF7;
+  --butter-100: #FFF9E6;
+  --butter-200: #FFF2C7;
+  --butter-300: #FFE599;
+  --butter-400: #FFD666;
+  --butter-500: #FFC533;
+  --butter-600: #E6A714;
+  --butter-700: #B38410;
+  
+  /* Semantic mappings */
+  --background: var(--linen-50);
+  --foreground: var(--iron-900);
+  --primary: var(--wood-500);
+  --primary-hover: var(--wood-600);
+  --secondary: var(--sage-500);
+  --secondary-hover: var(--sage-600);
+  --border: var(--linen-300);
+  --border-dark: var(--iron-300);
+  --muted: var(--iron-500);
+  --muted-bg: var(--linen-100);
+  --card: #ffffff;
+  --card-hover: var(--linen-50);
 }
 
 @theme inline {
+  /* Map custom colors to Tailwind */
+  --color-linen-50: var(--linen-50);
+  --color-linen-100: var(--linen-100);
+  --color-linen-200: var(--linen-200);
+  --color-linen-300: var(--linen-300);
+  --color-linen-400: var(--linen-400);
+  --color-linen-500: var(--linen-500);
+  --color-linen-600: var(--linen-600);
+  
+  --color-iron-50: var(--iron-50);
+  --color-iron-100: var(--iron-100);
+  --color-iron-200: var(--iron-200);
+  --color-iron-300: var(--iron-300);
+  --color-iron-400: var(--iron-400);
+  --color-iron-500: var(--iron-500);
+  --color-iron-600: var(--iron-600);
+  --color-iron-700: var(--iron-700);
+  --color-iron-800: var(--iron-800);
+  --color-iron-900: var(--iron-900);
+  
+  --color-wood-50: var(--wood-50);
+  --color-wood-100: var(--wood-100);
+  --color-wood-200: var(--wood-200);
+  --color-wood-300: var(--wood-300);
+  --color-wood-400: var(--wood-400);
+  --color-wood-500: var(--wood-500);
+  --color-wood-600: var(--wood-600);
+  --color-wood-700: var(--wood-700);
+  --color-wood-800: var(--wood-800);
+  --color-wood-900: var(--wood-900);
+  
+  --color-sage-50: var(--sage-50);
+  --color-sage-100: var(--sage-100);
+  --color-sage-200: var(--sage-200);
+  --color-sage-300: var(--sage-300);
+  --color-sage-400: var(--sage-400);
+  --color-sage-500: var(--sage-500);
+  --color-sage-600: var(--sage-600);
+  --color-sage-700: var(--sage-700);
+  
+  --color-tomato-50: var(--tomato-50);
+  --color-tomato-100: var(--tomato-100);
+  --color-tomato-200: var(--tomato-200);
+  --color-tomato-300: var(--tomato-300);
+  --color-tomato-400: var(--tomato-400);
+  --color-tomato-500: var(--tomato-500);
+  --color-tomato-600: var(--tomato-600);
+  --color-tomato-700: var(--tomato-700);
+  
+  --color-butter-50: var(--butter-50);
+  --color-butter-100: var(--butter-100);
+  --color-butter-200: var(--butter-200);
+  --color-butter-300: var(--butter-300);
+  --color-butter-400: var(--butter-400);
+  --color-butter-500: var(--butter-500);
+  --color-butter-600: var(--butter-600);
+  --color-butter-700: var(--butter-700);
+  
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+}
+
+/* Modern Layout Utilities */
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.page-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+  min-height: calc(100vh - 64px);
+}
+
+/* Left-aligned content layouts */
+.content-left {
+  max-width: 1400px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .content-left {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .content-left {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .content-left {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  .content-left {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+
+/* Two-column layout for larger screens */
+.layout-two-col {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .layout-two-col {
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+  }
+}
+
+/* Three-column layout for very large screens */
+.layout-three-col {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .layout-three-col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .layout-three-col {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Recipe grid layouts */
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .recipe-grid {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
+}
+
+/* Asymmetric hero layout */
+.hero-asymmetric {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .hero-asymmetric {
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 4rem;
+  }
+}
+
+/* Sign-in split layout */
+.signin-split {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 100vh;
+}
+
+@media (min-width: 1024px) {
+  .signin-split {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Recipe page layout */
+.recipe-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .recipe-layout {
+    grid-template-columns: 1fr 300px;
+    gap: 3rem;
+  }
+}
+
+/* Responsive containers */
+.container-fluid {
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.container-narrow {
+  max-width: 800px;
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.container-wide {
+  max-width: 1400px;
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }

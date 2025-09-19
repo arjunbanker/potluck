@@ -4,12 +4,22 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/components/providers/auth-context";
 
+type User = {
+  id: string;
+  email: string;
+  name?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
+  image?: string | null;
+  profileImage?: string | null;
+};
+
 export default function AccountSettingsPage() {
   const { session, status } = useAuth();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setSaving] = useState(false);
-  const [_user, setUser] = useState<any>(null);
+  const [_user, setUser] = useState<User | null>(null);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -115,7 +125,7 @@ export default function AccountSettingsPage() {
 
   if (status === "loading" || isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-linen-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center justify-center h-64">
             <div className="text-gray-500">Loading...</div>
@@ -126,8 +136,8 @@ export default function AccountSettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen bg-linen-50">
+      <main className="content-left py-8">
         <div className="bg-white rounded-lg shadow-sm">
           <div className="px-6 py-4 border-b border-gray-200">
             <h1 className="text-2xl font-bold text-gray-900">
@@ -141,9 +151,9 @@ export default function AccountSettingsPage() {
           <form onSubmit={handleSubmit} className="p-6 space-y-6">
             {/* Profile Image */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">
+              <span className="block text-sm font-medium text-gray-700 mb-3">
                 Profile Photo
-              </label>
+              </span>
               <div className="flex items-center space-x-4">
                 <div className="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
                   {profileImagePreview ? (

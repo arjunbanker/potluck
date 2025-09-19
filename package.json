@@ -37,6 +37,7 @@
     "@types/nodemailer": "^7.0.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "dotenv": "^17.2.2",
     "husky": "^9.1.7",
     "lint-staged": "^15.5.2",
     "tailwindcss": "^4",

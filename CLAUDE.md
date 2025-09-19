@@ -1,5 +1,13 @@
 # Claude Development Guidelines
 
+## Post-Edit Requirements
+
+**CRITICAL**: After making any code changes, you MUST immediately run:
+```bash
+npm run check:all
+```
+This ensures all edits pass TypeScript checking and linting before proceeding with any other tasks.
+
 ## Pre-Commit Checklist
 
 **IMPORTANT**: Before committing any changes, you MUST run these commands to ensure code quality and prevent TypeScript errors on Vercel:

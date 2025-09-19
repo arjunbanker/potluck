@@ -8,9 +8,18 @@ interface RecipeViewerProps {
   title: string;
   data: RecipeData;
   source?: any;
+  user?: {
+    id: string;
+    name?: string | null;
+    firstName?: string | null;
+    lastName?: string | null;
+    email: string;
+    image?: string | null;
+    profileImage?: string | null;
+  };
 }
 
-export function RecipeViewer({ title, data, source }: RecipeViewerProps) {
+export function RecipeViewer({ title, data, source, user }: RecipeViewerProps) {
   const [checkedIngredients, setCheckedIngredients] = useState<Set<string>>(
     new Set(),
   );
@@ -45,10 +54,10 @@ export function RecipeViewer({ title, data, source }: RecipeViewerProps) {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="w-full">
       <div className="bg-white rounded-lg shadow-sm">
         {data.image?.url && (
-          <div className="aspect-video relative overflow-hidden bg-gray-100 rounded-t-lg">
+          <div className="aspect-video relative overflow-hidden bg-linen-100 rounded-t-lg">
             <img
               src={data.image.url}
               alt={data.image.alt || title}
@@ -58,17 +67,17 @@ export function RecipeViewer({ title, data, source }: RecipeViewerProps) {
         )}
 
         <div className="p-6">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">{title}</h1>
+          <h1 className="text-3xl font-bold text-iron-900 mb-2">{title}</h1>
 
           {data.summary && (
-            <p className="text-lg text-gray-600 mb-4">{data.summary}</p>
+            <p className="text-lg text-iron-600 mb-4">{data.summary}</p>
           )}
 
           <div className="flex flex-wrap gap-4 mb-6 text-sm">
             {data.times?.total && (
               <div className="flex items-center gap-2">
                 <svg
-                  className="w-5 h-5 text-gray-400"
+                  className="w-5 h-5 text-iron-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -84,7 +93,7 @@ export function RecipeViewer({ title, data, source }: RecipeViewerProps) {
                   <span className="font-medium">Total: </span>
                   {formatCookingTime(data.times.total)}
                   {data.times.prep && (
-                    <span className="text-gray-500 ml-2">
+                    <span className="text-iron-500 ml-2">
                       (Prep: {formatCookingTime(data.times.prep)})
                     </span>
                   )}
@@ -95,7 +104,7 @@ export function RecipeViewer({ title, data, source }: RecipeViewerProps) {
             {data.servings && (
               <div className="flex items-center gap-2">
                 <svg
-                  className="w-5 h-5 text-gray-400"
+                  className="w-5 h-5 text-iron-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -117,7 +126,7 @@ export function RecipeViewer({ title, data, source }: RecipeViewerProps) {
             {data.difficulty && (
               <div className="flex items-center gap-2">
                 <svg
-                  className="w-5 h-5 text-gray-400"
+                  className="w-5 h-5 text-iron-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -138,7 +147,7 @@ export function RecipeViewer({ title, data, source }: RecipeViewerProps) {
             {data.cuisine && (
               <div className="flex items-center gap-2">
                 <svg
-                  className="w-5 h-5 text-gray-400"
+                  className="w-5 h-5 text-iron-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -160,7 +169,7 @@ export function RecipeViewer({ title, data, source }: RecipeViewerProps) {
               {data.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="text-sm px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full"
+                  className="text-sm px-3 py-1 bg-sage-50 text-sage-700 rounded-full"
                 >
                   {tag}
                 </span>
@@ -171,7 +180,7 @@ export function RecipeViewer({ title, data, source }: RecipeViewerProps) {
           <div className="space-y-8">
             <div>
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-bold text-gray-900">Ingredients</h2>
+                <h2 className="text-xl font-bold text-iron-900">Ingredients</h2>
                 {data.servings && (
                   <div className="flex items-center gap-2">
                     <button
@@ -180,7 +189,7 @@ export function RecipeViewer({ title, data, source }: RecipeViewerProps) {
                           Math.max(0.5, servingMultiplier - 0.5),
                         )
                       }
-                      className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
+                      className="w-8 h-8 rounded-full bg-linen-100 hover:bg-linen-200 flex items-center justify-center"
                     >
                       -
                     </button>
@@ -191,7 +200,7 @@ export function RecipeViewer({ title, data, source }: RecipeViewerProps) {
                       onClick={() =>
                         setServingMultiplier(servingMultiplier + 0.5)
                       }
-                      className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
+                      className="w-8 h-8 rounded-full bg-linen-100 hover:bg-linen-200 flex items-center justify-center"
                     >
                       +
                     </button>
@@ -203,7 +212,7 @@ export function RecipeViewer({ title, data, source }: RecipeViewerProps) {
                 {data.ingredients.map((group, groupIndex) => (
                   <div key={`ingredient-group-${groupIndex}`}>
                     {group.section && (
-                      <h3 className="font-medium text-gray-700 mb-2">
+                      <h3 className="font-medium text-iron-700 mb-2">
                         {group.section}
                       </h3>
                     )}
@@ -217,13 +226,13 @@ export function RecipeViewer({ title, data, source }: RecipeViewerProps) {
                               id={id}
                               checked={checkedIngredients.has(id)}
                               onChange={() => toggleIngredient(id)}
-                              className="mt-1 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                              className="mt-1 rounded border-linen-300 text-sage-600 focus:ring-wood-500"
                             />
                             <label
                               htmlFor={id}
                               className={`flex-1 cursor-pointer ${
                                 checkedIngredients.has(id)
-                                  ? "line-through text-gray-400"
+                                  ? "line-through text-iron-400"
                                   : ""
                               }`}
                             >
@@ -235,12 +244,12 @@ export function RecipeViewer({ title, data, source }: RecipeViewerProps) {
                               )}
                               <span className="ml-1">{item.ingredient}</span>
                               {item.preparation && (
-                                <span className="text-gray-500">
+                                <span className="text-iron-500">
                                   , {item.preparation}
                                 </span>
                               )}
                               {item.optional && (
-                                <span className="text-gray-400 text-sm ml-1">
+                                <span className="text-iron-400 text-sm ml-1">
                                   (optional)
                                 </span>
                               )}
@@ -255,7 +264,7 @@ export function RecipeViewer({ title, data, source }: RecipeViewerProps) {
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-gray-900 mb-4">
+              <h2 className="text-xl font-bold text-iron-900 mb-4">
                 Instructions
               </h2>
 
@@ -263,35 +272,35 @@ export function RecipeViewer({ title, data, source }: RecipeViewerProps) {
                 {data.instructions.map((instruction, index) => (
                   <div
                     key={`instruction-${index}`}
-                    className="p-4 rounded-lg border border-gray-200"
+                    className="p-4 rounded-lg border border-linen-200"
                   >
                     <div className="flex items-start gap-3">
-                      <span className="shrink-0 w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold">
+                      <span className="shrink-0 w-8 h-8 rounded-full bg-wood-500 text-white flex items-center justify-center font-bold">
                         {instruction.step}
                       </span>
                       <div className="flex-1">
-                        <p className="text-gray-800">{instruction.text}</p>
+                        <p className="text-iron-800">{instruction.text}</p>
 
                         {instruction.duration && (
-                          <p className="text-sm text-gray-500 mt-1">
+                          <p className="text-sm text-iron-500 mt-1">
                             Time: {formatCookingTime(instruction.duration)}
                           </p>
                         )}
 
                         {instruction.temperature && (
-                          <p className="text-sm text-gray-500 mt-1">
+                          <p className="text-sm text-iron-500 mt-1">
                             Temperature: {instruction.temperature}
                           </p>
                         )}
 
                         {instruction.tip && (
-                          <p className="text-sm text-indigo-600 mt-2">
+                          <p className="text-sm text-sage-600 mt-2">
                             💡 Tip: {instruction.tip}
                           </p>
                         )}
 
                         {instruction.warning && (
-                          <p className="text-sm text-orange-600 mt-2">
+                          <p className="text-sm text-tomato-600 mt-2">
                             ⚠️ Warning: {instruction.warning}
                           </p>
                         )}
@@ -304,20 +313,20 @@ export function RecipeViewer({ title, data, source }: RecipeViewerProps) {
           </div>
 
           {(data.notes || data.tips) && (
-            <div className="mt-8 p-4 bg-gray-50 rounded-lg">
+            <div className="mt-8 p-4 bg-linen-50 rounded-lg">
               {data.notes && (
                 <div className="mb-4">
-                  <h3 className="font-medium text-gray-700 mb-2">Notes</h3>
-                  <p className="text-gray-600">{data.notes}</p>
+                  <h3 className="font-medium text-iron-700 mb-2">Notes</h3>
+                  <p className="text-iron-600">{data.notes}</p>
                 </div>
               )}
 
               {data.tips && data.tips.length > 0 && (
                 <div>
-                  <h3 className="font-medium text-gray-700 mb-2">Tips</h3>
+                  <h3 className="font-medium text-iron-700 mb-2">Tips</h3>
                   <ul className="list-disc list-inside space-y-1">
                     {data.tips.map((tip, index) => (
-                      <li key={`tip-${index}`} className="text-gray-600">
+                      <li key={`tip-${index}`} className="text-iron-600">
                         {tip}
                       </li>
                     ))}
@@ -327,21 +336,105 @@ export function RecipeViewer({ title, data, source }: RecipeViewerProps) {
             </div>
           )}
 
-          {source?.url && (
-            <div className="mt-6 pt-6 border-t">
-              <p className="text-sm text-gray-500">
-                Recipe imported from:{" "}
-                <a
-                  href={source.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-indigo-600 hover:underline"
-                >
-                  {new URL(source.url).hostname}
-                </a>
-              </p>
-            </div>
-          )}
+          {/* Recipe Attribution Section */}
+          <div className="mt-8 space-y-4">
+            {/* Source URL Card */}
+            {source?.url && (
+              <div className="p-4 bg-linen-50 rounded-lg border border-linen-200">
+                <div className="flex items-start gap-3">
+                  <div className="shrink-0 w-10 h-10 bg-white rounded-lg border border-linen-200 flex items-center justify-center">
+                    <svg
+                      className="w-5 h-5 text-iron-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+                      />
+                    </svg>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-iron-900 mb-1">
+                      Original Recipe
+                    </p>
+                    <a
+                      href={source.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center gap-1 text-sm text-sage-600 hover:text-sage-700"
+                    >
+                      <span className="truncate">
+                        {source.title || new URL(source.url).hostname.replace('www.', '')}
+                      </span>
+                      <svg
+                        className="shrink-0 w-4 h-4 opacity-60 group-hover:opacity-100 transition-opacity"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                        />
+                      </svg>
+                    </a>
+                    {source.description && (
+                      <p className="text-xs text-iron-500 mt-1 line-clamp-2">
+                        {source.description}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Shared By Card */}
+            {user && (
+              <div className="p-4 bg-white rounded-lg border border-linen-200">
+                <div className="flex items-center gap-3">
+                  <div className="shrink-0">
+                    {user.profileImage || user.image ? (
+                      <img
+                        src={user.profileImage || user.image || ''}
+                        alt={user.name || 'User'}
+                        className="w-10 h-10 rounded-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-10 h-10 bg-linen-200 rounded-full flex items-center justify-center">
+                        <svg
+                          className="w-5 h-5 text-iron-500"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                          />
+                        </svg>
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm text-iron-500">Shared by</p>
+                    <p className="font-medium text-iron-900">
+                      {user.firstName && user.lastName
+                        ? `${user.firstName} ${user.lastName}`
+                        : user.name || user.email.split('@')[0]}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
