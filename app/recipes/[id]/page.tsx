@@ -49,7 +49,7 @@ export default function RecipePage({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     fetchRecipe();
-  }, [fetchRecipe]);
+  }, [params.id]);
 
   const fetchExistingShare = async () => {
     try {
@@ -204,10 +204,10 @@ export default function RecipePage({ params }: { params: { id: string } }) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-linen-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center justify-center h-64">
-            <div className="text-gray-500">Loading recipe...</div>
+            <div className="text-iron-500">Loading recipe...</div>
           </div>
         </div>
       </div>
@@ -216,15 +216,15 @@ export default function RecipePage({ params }: { params: { id: string } }) {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-linen-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="bg-white rounded-lg shadow-sm p-8 text-center">
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">
+            <h2 className="text-xl font-semibold text-iron-900 mb-2">
               {error}
             </h2>
             <button
               onClick={() => router.push("/dashboard")}
-              className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+              className="mt-4 px-4 py-2 bg-wood-600 text-white rounded-lg hover:bg-wood-700"
             >
               Back to Dashboard
             </button>
@@ -246,8 +246,8 @@ export default function RecipePage({ params }: { params: { id: string } }) {
         isOwner={isOwner}
       />
 
-      <main className="content-left py-8">
-        <div className="recipe-layout">
+      <main className="py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <RecipeViewer
             title={recipe.title}
             data={recipe.data}

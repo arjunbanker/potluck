@@ -32,7 +32,7 @@ export function PublicRecipeFeed({ userEmail }: PublicRecipeFeedProps) {
 
   useEffect(() => {
     fetchPublicRecipes();
-  }, [fetchPublicRecipes]);
+  }, []);
 
   if (isLoading) {
     return (

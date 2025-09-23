@@ -22,7 +22,7 @@ export default function ImportRecipePage() {
   if (status === "loading") {
     return (
       <div className="min-h-screen bg-linen-50">
-        <div className="content-left py-8">
+        <div className="p-4 sm:p-6 lg:p-8">
           <div className="text-center text-iron-500">Loading...</div>
         </div>
       </div>
@@ -33,7 +33,7 @@ export default function ImportRecipePage() {
   if (status === "unauthenticated") {
     return (
       <div className="min-h-screen bg-linen-50">
-        <div className="content-left py-8">
+        <div className="p-4 sm:p-6 lg:p-8">
           <div className="max-w-md mx-auto bg-white rounded-lg shadow-sm p-12 text-center">
             <svg
               className="mx-auto h-12 w-12 text-iron-400"
@@ -114,7 +114,7 @@ export default function ImportRecipePage() {
 
   return (
     <div className="min-h-screen bg-linen-50">
-      <main className="content-left py-8">
+      <main className="p-4 sm:p-6 lg:p-8">
         <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-sm p-8">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-iron-900 mb-2">

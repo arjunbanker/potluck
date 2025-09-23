@@ -28,7 +28,7 @@ export function LandingPage() {
   }, []);
 
   return (
-    <main className="content-left">
+    <main className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
       {/* Hero Section - Left Aligned */}
       <div className="hero-asymmetric py-16 lg:py-24">
         <div>
