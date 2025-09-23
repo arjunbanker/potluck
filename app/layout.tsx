@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { ConditionalNavbar } from "@/components/conditional-navbar";
+import { ConditionalSidebar } from "@/components/conditional-sidebar";
+import { LayoutWrapper } from "@/components/layout-wrapper";
 import { AuthProvider } from "@/components/providers/auth-context";
 import { AuthSessionProvider } from "@/components/providers/session-provider";
 
@@ -65,8 +66,8 @@ export default function RootLayout({
       >
         <AuthSessionProvider>
           <AuthProvider>
-            <ConditionalNavbar />
-            {children}
+            <ConditionalSidebar />
+            <LayoutWrapper>{children}</LayoutWrapper>
           </AuthProvider>
         </AuthSessionProvider>
       </body>

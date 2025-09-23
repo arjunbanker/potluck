@@ -20,8 +20,10 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-linen-50">
       {session ? (
-        <main className="content-left py-8">
-          <PublicRecipeFeed userEmail={session.user?.email || undefined} />
+        <main className="p-4 sm:p-6 lg:p-8">
+          <div className="max-w-7xl mx-auto">
+            <PublicRecipeFeed userEmail={session.user?.email || undefined} />
+          </div>
         </main>
       ) : (
         <LandingPage />
