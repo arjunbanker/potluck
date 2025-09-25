@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "setup": "# Copy configuration files\ncp \"$CONDUCTOR_ROOT_PATH/.env.local\" .\n\n# Install dependencies\nyarn install",
-    "run": "bash ; echo 'hi';"
+    "setup": "# Copy configuration files\ncp \"$CONDUCTOR_ROOT_PATH/.env.local\" .\n\n# Install dependencies\nbun install",
+    "run": "# Set up path to workspace\ncd \"$CONDUCTOR_WORKSPACE_PATH\"\n\n# Run the Next.js development server\nbun run dev"
   },
   "runScriptMode": "nonconcurrent"
 }
